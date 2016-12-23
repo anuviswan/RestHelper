@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestPCL.Portable", "SampleApplication\SampleApplication\RestPCL.Portable.csproj", "{1DDA27B4-DDA8-49FF-9E57-64AF2DCF605C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestHelper.Portable", "SampleApplication\SampleApplication\RestHelper.Portable.csproj", "{1DDA27B4-DDA8-49FF-9E57-64AF2DCF605C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestPCL.Droid", "SampleApplication\SampleApplication.Droid\RestPCL.Droid.csproj", "{495F83A9-805D-4A67-B999-47365C426DCE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestHelper.Droid", "SampleApplication\SampleApplication.Droid\RestHelper.Droid.csproj", "{495F83A9-805D-4A67-B999-47365C426DCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestPCL.Net45", "..\RestPCL\RestPCL.Net45.csproj", "{3EAD9A45-38CE-4AA0-9D70-7BEBBDCCC514}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestHelper.Net45", "..\RestPCL\RestHelper.Net45.csproj", "{3EAD9A45-38CE-4AA0-9D70-7BEBBDCCC514}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

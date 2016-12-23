@@ -154,8 +154,8 @@
     <Content Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SampleApplication\RestPCL.Portable.csproj">
-      <Name>RestPCL.Portable</Name>
+    <ProjectReference Include="..\SampleApplication\RestHelper.Portable.csproj">
+      <Name>RestHelper.Portable</Name>
       <Project>{1DDA27B4-DDA8-49FF-9E57-64AF2DCF605C}</Project>
     </ProjectReference>
   </ItemGroup>
