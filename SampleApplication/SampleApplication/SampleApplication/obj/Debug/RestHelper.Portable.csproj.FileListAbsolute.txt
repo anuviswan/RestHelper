@@ -23,5 +23,6 @@ D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\Sam
 D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication\obj\Debug\SampleApplication.Views.MainPage.xaml.g.cs
 D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication\obj\Debug\SampleApplication.dll
 D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication\obj\Debug\SampleApplication.pdb
+D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication\obj\Debug\RestHelper.Portable.csprojResolveAssemblyReference.cache
 D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication\obj\Debug\SampleApplication.dll.mdb
 D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication\bin\Debug\SampleApplication.dll.mdb
