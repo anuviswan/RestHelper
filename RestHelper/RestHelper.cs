@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace RestHelper
 {
     public class RestHelper
@@ -13,6 +14,7 @@ namespace RestHelper
         #region Private Properties
         private Uri _BaseUri;
         private HttpClient _HttpClient;
+        private Dictionary<string,object> _ParameterDictionary;
         #endregion
 
         #region Public Attributes
@@ -44,6 +46,19 @@ namespace RestHelper
         #endregion
 
         /// <summary>
+        /// Add Paramter
+        /// </summary>
+        /// <param name="Key">Paramter Name</param>
+        /// <param name="Value">Parameter Value</param>
+        public void AddParameter(string Key,object Value)
+        {
+            if(_ParameterDictionary==null)
+                _ParameterDictionary = new Dictionary<string, object>();
+
+            _ParameterDictionary.Add(Key, Value);
+        }
+
+        /// <summary>
         /// Invoke the WebAPI mentioned using Base URL and Resource URL, with the parameters 
         /// in parameter list.
         /// </summary>
@@ -52,17 +67,23 @@ namespace RestHelper
         /// <returns></returns>
         public async Task<T> ExecuteAsync<T>(string ResourceURL, HttpMethod RequestType) 
         {
-            var apiUri = BuildURI(ResourceURL);
 
             if (HttpMethod.Get == RequestType)
             {
-                return await ExecuteGet<T>(apiUri);
+                return await ExecuteGet<T>(ResourceURL);
             }
             
             return default(T);
         }
 
         #region Private Methods
+
+        private bool HasParamter
+        {
+            get { return _ParameterDictionary?.Count() > 0; }
+        }
+
+
         /// <summary>
         /// Builds the URI based on BaseURI and ResourceURI
         /// </summary>
@@ -70,22 +91,34 @@ namespace RestHelper
         /// <returns>Resultant URI</returns>
         private Uri BuildURI(string resourceURL)
         {
-            return new Uri(_BaseUri, resourceURL);
+            if(HasParamter)
+            {
+                var parameterString = String.Join("&", _ParameterDictionary
+                        .Select(kvp => String.Format("{0}={1}",
+                        System.Net.WebUtility.UrlEncode(kvp.Key),
+                        System.Net.WebUtility.UrlEncode(Convert.ToString(kvp.Value)))).ToArray());
+
+                return new Uri(_BaseUri, string.Format("{0}?{1}", resourceURL, parameterString));
+            }
+            else
+                return new Uri(_BaseUri, resourceURL);
         }
+
 
 
         /// <summary>
         /// Execute a Get Request at the API
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="APIUri">Complete URI to the API</param>
+        /// <param name="ResourceUri">Resource URI</param>
         /// <returns>Return Value from the API</returns>
-        private async Task<T> ExecuteGet<T>(Uri APIUri)
+        private async Task<T> ExecuteGet<T>(string ResourceURI)
         {
             T result;
             try
             {
-                var response = await _HttpClient.GetAsync(APIUri);
+                var response = await _HttpClient.GetAsync(BuildURI(ResourceURI));
+
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();

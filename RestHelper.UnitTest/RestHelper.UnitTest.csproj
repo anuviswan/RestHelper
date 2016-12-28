@@ -85,7 +85,7 @@
   <ItemGroup>
     <Compile Include="OWINServer\UserController.cs" />
     <Compile Include="OWINServer\WebApiStartup.cs" />
-    <Compile Include="RestHelperTest.cs" />
+    <Compile Include="RestHelperGetRequestTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
