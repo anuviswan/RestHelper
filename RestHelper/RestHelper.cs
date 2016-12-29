@@ -15,7 +15,9 @@ namespace RestHelper
         #region Private Properties
         private Uri _BaseUri;
         private HttpClient _HttpClient;
-        private Dictionary<string,object> _ParameterDictionary;
+        private ParameterList _ParameterList;
+        private string _ResourceURI;
+        private HttpMethod _HttpMethodType;
         #endregion
 
         #region Public Attributes
@@ -43,6 +45,7 @@ namespace RestHelper
             this._BaseUri = new Uri(BaseUri);
             this._HttpClient = new HttpClient();
             this._HttpClient.MaxResponseContentBufferSize = 256000;
+            this._ParameterList = new ParameterList();
         }
         #endregion
 
@@ -53,10 +56,7 @@ namespace RestHelper
         /// <param name="Value">Parameter Value</param>
         public void AddParameter(string Key,object Value)
         {
-            if(_ParameterDictionary==null)
-                _ParameterDictionary = new Dictionary<string, object>();
-
-            _ParameterDictionary.Add(Key, Value);
+            _ParameterList.AddParameter(Key, Value);
         }
 
         /// <summary>
@@ -68,41 +68,30 @@ namespace RestHelper
         /// <returns></returns>
         public async Task<T> ExecuteAsync<T>(string ResourceURL, HttpMethod RequestType) 
         {
+            this._ResourceURI = ResourceURL;
+            this._HttpMethodType = RequestType;
 
             if (HttpMethod.Get == RequestType)
             {
-                return await ExecuteGet<T>(ResourceURL);
+                return await ExecuteGetAsync<T>();
             }
             
             return default(T);
         }
 
         #region Private Methods
-
-        private bool HasParamter
-        {
-            get { return _ParameterDictionary?.Count() > 0; }
-        }
-
+        
 
         /// <summary>
         /// Builds the URI based on BaseURI and ResourceURI
         /// </summary>
-        /// <param name="resourceURL"></param>
         /// <returns>Resultant URI</returns>
-        private Uri BuildURI(string resourceURL)
+        private Uri BuildURI()
         {
-            if(HasParamter)
-            {
-                var parameterString = String.Join("&", _ParameterDictionary
-                        .Select(kvp => String.Format("{0}={1}",
-                        System.Net.WebUtility.UrlEncode(kvp.Key),
-                        System.Net.WebUtility.UrlEncode(Convert.ToString(kvp.Value)))).ToArray());
-
-                return new Uri(_BaseUri, string.Format("{0}?{1}", resourceURL, parameterString));
-            }
+            if(_HttpMethodType == HttpMethod.Get && _ParameterList.HasParameter)
+                return new Uri(_BaseUri, string.Format("{0}?{1}", _ResourceURI , _ParameterList.GetQueryString() ));
             else
-                return new Uri(_BaseUri, resourceURL);
+                return new Uri(_BaseUri, _ResourceURI);
         }
 
 
@@ -111,14 +100,13 @@ namespace RestHelper
         /// Execute a Get Request at the API
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="ResourceUri">Resource URI</param>
         /// <returns>Return Value from the API</returns>
-        private async Task<T> ExecuteGet<T>(string ResourceURI)
+        private async Task<T> ExecuteGetAsync<T>()
         {
             T result;
             try
             {
-                var response = await _HttpClient.GetAsync(BuildURI(ResourceURI));
+                var response = await _HttpClient.GetAsync(BuildURI());
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -135,12 +123,9 @@ namespace RestHelper
 
             return default(T);
         }
-
-
-       
-   
+ 
 
     #endregion
 
-}
+    }
 }
