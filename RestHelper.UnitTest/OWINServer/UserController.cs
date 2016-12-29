@@ -10,38 +10,45 @@ namespace RestHelper.UnitTest.OWINServer
     [RoutePrefix("api/user")]
     public class UserController : ApiController
     {
-
+        #region Get Requests
+        
+        [HttpGet]
+        [Route("")]
+        public bool WithoutParamBooleanResponse()
+        {
+            return true;
+        }
 
         [HttpGet]
-        [Route("api/user/SingleParamStringResponse")]
+        [Route("")]
         public string SingleParamStringResponse(string VariableStr)
         {
             return string.Format("{0}={1}", "VariableStr", VariableStr);
         }
 
         [HttpGet]
-        [Route("api/user/DateTimeParamStringResponse")]
+        [Route("")]
         public string DateTimeParamStringResponse(DateTime VariableDate)
         {
             return string.Format("{0}={1}", "VariableDate", VariableDate);
         }
 
         [HttpGet]
-        [Route("api/user/MultipleParamStringResponse")]
+        [Route("")]
         public string MultipleParamStringResponse(string VariableStr1, string VariableStr2)
         {
             return string.Format("{0}={1}&{2}={3}", "VariableStr1", VariableStr1, "VariableStr2", VariableStr2);
         }
 
         [HttpGet]
-        [Route("api/user/MultipleTypeParamStringResponse")]
+        [Route("")]
         public string MultipleTypeParamStringResponse(string VariableStr, int VariableInt, bool VariableBool)
         {
             return string.Format("VariableStr={0}&VariableInt={1}&VariableBool={2}", VariableStr,VariableInt,VariableBool);
         }
 
         [HttpGet]
-        [Route("api/user/ComplexReferenceTypeParamStringResponse")]
+        [Route("")]
         public string ComplexReferenceTypeParamStringResponse([FromUri]ComplexRefType VariableComplexRef,string DummyParam)
         {
             return string.Format("VariableStr={0}&VariableInt={1}&VariableBool={2}&VariableDateTime={3}", 
@@ -51,12 +58,56 @@ namespace RestHelper.UnitTest.OWINServer
                                     VariableComplexRef.VariableDateTime);
         }
 
-        [HttpGet]
-        [Route("api/user/WithoutParamBooleanResponse")]
-        public bool WithoutParamBooleanResponse()
+        #endregion
+
+        #region Get Requests
+
+        [HttpPost]
+        [Route("")]
+        public bool PostWithoutParamBooleanResponse()
         {
             return true;
         }
 
+        [HttpPost]
+        [Route("")]
+        public string PostSingleParamStringResponse(string VariableStr)
+        {
+            return string.Format("{0}={1}", "VariableStr", VariableStr);
+        }
+
+        [HttpPost]
+        [Route("")]
+        public string PostDateTimeParamStringResponse(DateTime VariableDate)
+        {
+            return string.Format("{0}={1}", "VariableDate", VariableDate);
+        }
+
+        [HttpPost]
+        [Route("")]
+        public string PostMultipleParamStringResponse(string VariableStr1, string VariableStr2)
+        {
+            return string.Format("{0}={1}&{2}={3}", "VariableStr1", VariableStr1, "VariableStr2", VariableStr2);
+        }
+
+        [HttpPost]
+        [Route("")]
+        public string PostMultipleTypeParamStringResponse(string VariableStr, int VariableInt, bool VariableBool)
+        {
+            return string.Format("VariableStr={0}&VariableInt={1}&VariableBool={2}", VariableStr, VariableInt, VariableBool);
+        }
+
+        [HttpPost]
+        [Route("")]
+        public string PostComplexReferenceTypeParamStringResponse([FromUri]ComplexRefType VariableComplexRef, string DummyParam)
+        {
+            return string.Format("VariableStr={0}&VariableInt={1}&VariableBool={2}&VariableDateTime={3}",
+                                    VariableComplexRef.VariableStr,
+                                    VariableComplexRef.VariableInt,
+                                    VariableComplexRef.VariableBool,
+                                    VariableComplexRef.VariableDateTime);
+        }
+
+        #endregion
     }
 }
