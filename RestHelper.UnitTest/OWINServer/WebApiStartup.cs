@@ -16,6 +16,7 @@ namespace RestHelper.UnitTest.OWINServer
         {
             // Configure Web API for self-host. 
             HttpConfiguration config = new HttpConfiguration();
+            config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

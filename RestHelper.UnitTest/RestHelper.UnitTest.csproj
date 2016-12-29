@@ -83,10 +83,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BaseTest.cs" />
+    <Compile Include="OWINServer\ComplexRefType.cs" />
     <Compile Include="OWINServer\UserController.cs" />
     <Compile Include="OWINServer\WebApiStartup.cs" />
     <Compile Include="RestHelperGetRequestTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RestHelperPostRequestTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

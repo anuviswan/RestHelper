@@ -2,10 +2,10 @@ D:\App Store\GitHub\anuviswan\RestHelper\RestPCL\bin\Debug\RestPCL.dll
 D:\App Store\GitHub\anuviswan\RestHelper\RestPCL\bin\Debug\RestPCL.pdb
 D:\App Store\GitHub\anuviswan\RestHelper\RestPCL\obj\Debug\RestPCL.dll
 D:\App Store\GitHub\anuviswan\RestHelper\RestPCL\obj\Debug\RestPCL.pdb
-D:\App Store\GitHub\anuviswan\RestHelper\RestHelper\obj\Debug\RestHelper.Net45.csprojResolveAssemblyReference.cache
 D:\App Store\GitHub\anuviswan\RestHelper\RestHelper\bin\Debug\RestHelper.dll
 D:\App Store\GitHub\anuviswan\RestHelper\RestHelper\bin\Debug\RestHelper.pdb
-D:\App Store\GitHub\anuviswan\RestHelper\RestHelper\obj\Debug\RestHelper.dll
-D:\App Store\GitHub\anuviswan\RestHelper\RestHelper\obj\Debug\RestHelper.pdb
 D:\App Store\GitHub\anuviswan\RestHelper\RestHelper\bin\Debug\Newtonsoft.Json.dll
 D:\App Store\GitHub\anuviswan\RestHelper\RestHelper\bin\Debug\Newtonsoft.Json.xml
+D:\App Store\GitHub\anuviswan\RestHelper\RestHelper\obj\Debug\RestHelper.dll
+D:\App Store\GitHub\anuviswan\RestHelper\RestHelper\obj\Debug\RestHelper.pdb
+D:\App Store\GitHub\anuviswan\RestHelper\RestHelper\obj\Debug\RestHelper.Net45.csprojResolveAssemblyReference.cache

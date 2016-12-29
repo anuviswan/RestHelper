@@ -1,6 +1,3 @@
-D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication.Droid\obj\Debug\RestHelper.Droid.csprojResolveAssemblyReference.cache
-D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication.Droid\obj\Debug\SampleApplication.Droid.dll
-D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication.Droid\obj\Debug\SampleApplication.Droid.pdb
 D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication.Droid\bin\Debug\SampleApplication.Droid.dll
 D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication.Droid\bin\Debug\SampleApplication.Droid.pdb
 D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication.Droid\bin\Debug\SampleApplication.Droid.apk
@@ -42,6 +39,9 @@ D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\Sam
 D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication.Droid\bin\Debug\Xamarin.Forms.Xaml.pdb
 D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication.Droid\bin\Debug\Xamarin.Forms.Xaml.xml
 D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication.Droid\bin\Debug\Xamarin.Forms.Xaml.dll.mdb
+D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication.Droid\obj\Debug\RestHelper.Droid.csprojResolveAssemblyReference.cache
+D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication.Droid\obj\Debug\SampleApplication.Droid.dll
+D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication.Droid\obj\Debug\SampleApplication.Droid.pdb
 D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication.Droid\obj\Debug\android\bin\SampleApplication.Droid.apk
 D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication.Droid\obj\Debug\res\drawable\icon.png
 D:\App Store\GitHub\anuviswan\RestHelper\SampleApplication\SampleApplication\SampleApplication.Droid\obj\Debug\res\drawable-hdpi\icon.png
