@@ -14,28 +14,7 @@ namespace RestHelper.UnitTest
     {
         internal const string _BaseAddress = "http://localhost:9388/";
 
-
-        public async Task<bool> CallNoParamAPI_ServerRunning_GetResponseTrue(string ResourceURL,HttpMethod MethodType)
-        {
-
-            #region Arrange
-            var restHelper = new RestHelper(_BaseAddress);
-            bool result;
-            #endregion
-
-            #region Act
-            using (WebApp.Start<WebApiStartup>(_BaseAddress))
-            {
-                
-                result = await restHelper.ExecuteGetAsync<bool>(ResourceURL,null);
-            }
-            #endregion
-
-            return result; 
-
-        }
-
-
+        
         public async Task<bool> CallSingleParamAPI_ServerRunning_GetResponseWithParamaterNameValueAppended(string ResourceURL, HttpMethod MethodType)
         {
 
@@ -46,84 +25,20 @@ namespace RestHelper.UnitTest
 
             using (WebApp.Start<WebApiStartup>(_BaseAddress))
             {
-                result = await restHelper.ExecuteGetAsync<string>(ResourceURL, ParameterKey,ParameterValue);
+                if (MethodType == HttpMethod.Get)
+                    restHelper.AddQueryStringParameters(ParameterKey, ParameterValue);
+                else
+                    restHelper.AssignMessageBodyParameter(ParameterValue);
+
+                result = await restHelper.ExecuteAsync<string>(MethodType, ResourceURL);
             }
 
-            return (string.Format("{0}={1}", ParameterKey, ParameterValue) == result);
-
+            if(MethodType == HttpMethod.Get)
+                return (string.Format("{0}={1}", ParameterKey, ParameterValue) == result);
+            else
+                return (ParameterValue == result);
         }
 
-
-        public async Task<bool> CallMultipleParamAPI_ServerRunning_GetResponseWithParamatersNameValueAppended(string ResourceURL, HttpMethod MethodType)
-        {
-            var restHelper = new RestHelper(_BaseAddress);
-            string ParameterKey1 = "VariableStr1";
-            string ParameterValue1 = "DummyStr1";
-            string ParameterKey2 = "VariableStr2";
-            string ParameterValue2 = "DummyStr2";
-            string result;
-
-            var Parameters = new Dictionary<string, object>();
-            Parameters.Add(ParameterKey1, ParameterValue1);
-            Parameters.Add(ParameterKey2, ParameterValue2);
-            using (WebApp.Start<WebApiStartup>(_BaseAddress))
-            {
-                result = await restHelper.ExecuteGetAsync<string>(ResourceURL, Parameters);
-            }
-            return (string.Format("{0}={1}&{2}={3}",
-                            ParameterKey1, ParameterValue1,
-                            ParameterKey2, ParameterValue2) == result);
-        }
-
-
-        public async Task<bool> CallMultipleTypeParamAPI_ServerRunning_GetResponseWithParamatersNameValueAppended(string ResourceURL, HttpMethod MethodType)
-        {
-            
-            var restHelper = new RestHelper(_BaseAddress);
-            string ParameterKey1 = "VariableStr";
-            string ParameterValue1 = "Jia";
-            string ParameterKey2 = "VariableInt";
-            int ParameterValue2 = 1;
-            string ParameterKey3 = "VariableBool";
-            bool ParameterValue3 = true;
-            string result;
-            
-
-            var Parameters = new Dictionary<string, object>();
-            Parameters.Add(ParameterKey1, ParameterValue1);
-            Parameters.Add(ParameterKey2, ParameterValue2);
-            Parameters.Add(ParameterKey3, ParameterValue3);
-
-            using (WebApp.Start<WebApiStartup>(_BaseAddress))
-            {
-                result = await restHelper.ExecuteGetAsync<string>(ResourceURL, Parameters);
-            }
-            return (string.Format("{0}={1}&{2}={3}&{4}={5}",
-                                        ParameterKey1, ParameterValue1,
-                                        ParameterKey2, ParameterValue2,
-                                        ParameterKey3, ParameterValue3) == result);
-
-        }
-
-
-        public async Task<bool> CallDateTimeParamAPI_ServerRunning_GetResponseWithParamaterNameValueAppended(string ResourceURL, HttpMethod MethodType)
-        {
-
-            var restHelper = new RestHelper(_BaseAddress);
-            string ParameterKey = "VariableDate";
-            DateTime ParameterValue = DateTime.Now;
-            string result;
-
-            var Parameters = new Dictionary<string, object>();
-            Parameters.Add(ParameterKey, ParameterValue);
-
-            using (WebApp.Start<WebApiStartup>(_BaseAddress))
-            {
-                result = await restHelper.ExecuteGetAsync<string>(ResourceURL, Parameters);
-            }
-            return (string.Format("{0}={1}", ParameterKey, ParameterValue) == result);
-
-        }
 
 
         public async Task<bool> CallComplexRefTypeParamAPI_ServerRunning_GetResponseWithParamatersNameValueAppended(string ResourceURL, HttpMethod MethodType)
@@ -131,7 +46,7 @@ namespace RestHelper.UnitTest
 
             var restHelper = new RestHelper(_BaseAddress);
 
-            string ParameterKey1 = "ParameterComplexRefType";
+            string ParameterKey1 = "VariableStr";
             string ParameterValueStr = "Jia";
 
             string ParameterKey2 = "VariableInt";
@@ -152,11 +67,15 @@ namespace RestHelper.UnitTest
             };
             string result;
             var Parameters = new Dictionary<string, object>();
-            Parameters.Add("ParameterComplexRefType", ParameterComplexRefType);
+            
 
             using (WebApp.Start<WebApiStartup>(_BaseAddress))
             {
-                result = await restHelper.ExecuteGetAsync<string>(ResourceURL, Parameters);
+                if(MethodType == HttpMethod.Get)
+                    restHelper.AddQueryStringParameters("ParameterComplexRefType", ParameterComplexRefType);
+                else
+                    restHelper.AssignMessageBodyParameter(ParameterComplexRefType);
+                result = await restHelper.ExecuteAsync<string>(MethodType,ResourceURL);
             }
 
             return (string.Format("{0}={1}&{2}={3}&{4}={5}&{6}={7}",

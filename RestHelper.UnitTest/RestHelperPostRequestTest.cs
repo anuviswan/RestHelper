@@ -13,16 +13,6 @@ namespace RestHelper.UnitTest
     [TestClass]
     public class RestHelperPostRequestTest : BaseTest
     {
-
-
-        [TestMethod]
-        public async Task CallNoParamAPI_Post_GetResponseTrue()
-        {
-           var resourceURL = "api/user/PostWithoutParamBooleanResponse";
-           var result = await base.CallNoParamAPI_ServerRunning_GetResponseTrue(resourceURL, HttpMethod.Post);
-           Assert.IsTrue(result);
-        }
-
         [TestMethod]
         public async Task CallSingleParamAPI_Post_GetResponseWithParamaterNameValueAppended()
         {
@@ -31,33 +21,7 @@ namespace RestHelper.UnitTest
             Assert.IsTrue(result);
         }
 
-        [TestMethod]
-        public async Task CallMultipleParamAPI_Post_GetResponseWithParamatersNameValueAppended()
-        {
-            var resourceURL = "api/user/PostMultipleParamStringResponse";
-            var result = await base.CallMultipleParamAPI_ServerRunning_GetResponseWithParamatersNameValueAppended(resourceURL, HttpMethod.Post);
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public async Task CallMultipleTypeParamAPI_Post_GetResponseWithParamatersNameValueAppended()
-        {
-
-            var resourceURL = "api/user/PostMultipleTypeParamStringResponse";
-            var result = await base.CallMultipleTypeParamAPI_ServerRunning_GetResponseWithParamatersNameValueAppended(resourceURL, HttpMethod.Post);
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public async Task CallDateTimeParamAPI_Post_GetResponseWithParamaterNameValueAppended()
-        {
-
-            var resourceURL = "api/user/PostDateTimeParamStringResponse";
-            var result = await base.CallDateTimeParamAPI_ServerRunning_GetResponseWithParamaterNameValueAppended(resourceURL, HttpMethod.Post);
-            Assert.IsTrue(result);
-
-        }
-
+       
 
         [TestMethod]
         public async Task CallComplexRefTypeParamAPI_Post_GetResponseWithParamatersNameValueAppended()

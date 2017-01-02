@@ -64,20 +64,6 @@ namespace RestHelper.UnitTest.OWINServer
 
         [HttpPost]
         [Route("")]
-        public bool PostWithoutParamBooleanResponse()
-        {
-            return true;
-        }
-
-        [HttpPost]
-        [Route("")]
-        public string PostSingleParamStringResponse(string VariableStr)
-        {
-            return string.Format("{0}={1}", "VariableStr", VariableStr);
-        }
-
-        [HttpPost]
-        [Route("")]
         public string PostDateTimeParamStringResponse(DateTime VariableDate)
         {
             return string.Format("{0}={1}", "VariableDate", VariableDate);
@@ -99,7 +85,7 @@ namespace RestHelper.UnitTest.OWINServer
 
         [HttpPost]
         [Route("")]
-        public string PostComplexReferenceTypeParamStringResponse([FromUri]ComplexRefType VariableComplexRef, string DummyParam)
+        public string PostComplexReferenceTypeParamStringResponse(ComplexRefType VariableComplexRef)
         {
             return string.Format("VariableStr={0}&VariableInt={1}&VariableBool={2}&VariableDateTime={3}",
                                     VariableComplexRef.VariableStr,

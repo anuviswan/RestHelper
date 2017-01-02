@@ -14,9 +14,23 @@ namespace RestHelper.UnitTest
         [TestMethod]
         public async Task CallNoParamAPI_Get_GetResponseTrue()
         {
+
+            #region Arrange
             var resourceURL = "api/user/WithoutParamBooleanResponse";
-            var result = await base.CallNoParamAPI_ServerRunning_GetResponseTrue(resourceURL, HttpMethod.Get);
+            var restHelper = new RestHelper(_BaseAddress);
+            bool result;
+            #endregion
+
+            #region Act
+            using (WebApp.Start<WebApiStartup>(_BaseAddress))
+            {
+                result = await restHelper.ExecuteAsync<bool>(HttpMethod.Get, resourceURL);
+            }
+            #endregion
+
+            #region Assert
             Assert.IsTrue(result);
+            #endregion
         }
 
         [TestMethod]
@@ -27,34 +41,8 @@ namespace RestHelper.UnitTest
             Assert.IsTrue(result);
         }
 
-        [TestMethod]
-        public async Task CallMultipleParamAPI_Get_GetResponseWithParamatersNameValueAppended()
-        {
-            var resourceURL = "api/user/MultipleParamStringResponse";
-            var result = await base.CallMultipleParamAPI_ServerRunning_GetResponseWithParamatersNameValueAppended(resourceURL, HttpMethod.Get);
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public async Task CallMultipleTypeParamAPI_Get_GetResponseWithParamatersNameValueAppended()
-        {
-
-            var resourceURL = "api/user/MultipleTypeParamStringResponse";
-            var result = await base.CallMultipleTypeParamAPI_ServerRunning_GetResponseWithParamatersNameValueAppended(resourceURL, HttpMethod.Get);
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public async Task CallDateTimeParamAPI_Get_GetResponseWithParamaterNameValueAppended()
-        {
-
-            var resourceURL = "api/user/DateTimeParamStringResponse";
-            var result = await base.CallDateTimeParamAPI_ServerRunning_GetResponseWithParamaterNameValueAppended(resourceURL, HttpMethod.Get);
-            Assert.IsTrue(result);
-
-        }
-
-
+        
+        
         [TestMethod]
         public async Task CallComplexRefTypeParamAPI_Get_GetResponseWithParamatersNameValueAppended()
         {
