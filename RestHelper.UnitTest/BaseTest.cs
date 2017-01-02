@@ -26,11 +26,12 @@ namespace RestHelper.UnitTest
             #region Act
             using (WebApp.Start<WebApiStartup>(_BaseAddress))
             {
-                result = await restHelper.ExecuteAsync<bool>(ResourceURL, MethodType);
+                
+                result = await restHelper.ExecuteGetAsync<bool>(ResourceURL,null);
             }
             #endregion
 
-            return result;
+            return result; 
 
         }
 
@@ -38,32 +39,23 @@ namespace RestHelper.UnitTest
         public async Task<bool> CallSingleParamAPI_ServerRunning_GetResponseWithParamaterNameValueAppended(string ResourceURL, HttpMethod MethodType)
         {
 
-            #region Arrange
             var restHelper = new RestHelper(_BaseAddress);
             string ParameterKey = "VariableStr";
             string ParameterValue = "DummyString";
             string result;
-            #endregion
 
-            #region Act
-            restHelper.AddParameter(ParameterKey, ParameterValue);
             using (WebApp.Start<WebApiStartup>(_BaseAddress))
             {
-                result = await restHelper.ExecuteAsync<string>(ResourceURL, MethodType);
+                result = await restHelper.ExecuteGetAsync<string>(ResourceURL, ParameterKey,ParameterValue);
             }
-            #endregion
 
             return (string.Format("{0}={1}", ParameterKey, ParameterValue) == result);
-            #region Assert
-            //Assert.AreEqual<string>(string.Format("{0}1={1}", ParameterKey, ParameterValue), result);
-            #endregion
 
         }
 
 
         public async Task<bool> CallMultipleParamAPI_ServerRunning_GetResponseWithParamatersNameValueAppended(string ResourceURL, HttpMethod MethodType)
         {
-
             var restHelper = new RestHelper(_BaseAddress);
             string ParameterKey1 = "VariableStr1";
             string ParameterValue1 = "DummyStr1";
@@ -71,24 +63,22 @@ namespace RestHelper.UnitTest
             string ParameterValue2 = "DummyStr2";
             string result;
 
-            restHelper.AddParameter(ParameterKey1, ParameterValue1);
-            restHelper.AddParameter(ParameterKey2, ParameterValue2);
-
+            var Parameters = new Dictionary<string, object>();
+            Parameters.Add(ParameterKey1, ParameterValue1);
+            Parameters.Add(ParameterKey2, ParameterValue2);
             using (WebApp.Start<WebApiStartup>(_BaseAddress))
             {
-                result = await restHelper.ExecuteAsync<string>(ResourceURL, MethodType);
+                result = await restHelper.ExecuteGetAsync<string>(ResourceURL, Parameters);
             }
             return (string.Format("{0}={1}&{2}={3}",
-                                        ParameterKey1, ParameterValue1,
-                                        ParameterKey2, ParameterValue2) == result);
-
+                            ParameterKey1, ParameterValue1,
+                            ParameterKey2, ParameterValue2) == result);
         }
 
 
         public async Task<bool> CallMultipleTypeParamAPI_ServerRunning_GetResponseWithParamatersNameValueAppended(string ResourceURL, HttpMethod MethodType)
         {
-
-            #region Arrange
+            
             var restHelper = new RestHelper(_BaseAddress);
             string ParameterKey1 = "VariableStr";
             string ParameterValue1 = "Jia";
@@ -97,24 +87,21 @@ namespace RestHelper.UnitTest
             string ParameterKey3 = "VariableBool";
             bool ParameterValue3 = true;
             string result;
-            #endregion
+            
 
-            #region Act
-            restHelper.AddParameter(ParameterKey1, ParameterValue1);
-            restHelper.AddParameter(ParameterKey2, ParameterValue2);
-            restHelper.AddParameter(ParameterKey3, ParameterValue3);
+            var Parameters = new Dictionary<string, object>();
+            Parameters.Add(ParameterKey1, ParameterValue1);
+            Parameters.Add(ParameterKey2, ParameterValue2);
+            Parameters.Add(ParameterKey3, ParameterValue3);
+
             using (WebApp.Start<WebApiStartup>(_BaseAddress))
             {
-                result = await restHelper.ExecuteAsync<string>(ResourceURL, MethodType);
+                result = await restHelper.ExecuteGetAsync<string>(ResourceURL, Parameters);
             }
-            #endregion
-
-            #region Assert
             return (string.Format("{0}={1}&{2}={3}&{4}={5}",
                                         ParameterKey1, ParameterValue1,
                                         ParameterKey2, ParameterValue2,
                                         ParameterKey3, ParameterValue3) == result);
-            #endregion
 
         }
 
@@ -122,24 +109,19 @@ namespace RestHelper.UnitTest
         public async Task<bool> CallDateTimeParamAPI_ServerRunning_GetResponseWithParamaterNameValueAppended(string ResourceURL, HttpMethod MethodType)
         {
 
-            #region Arrange
             var restHelper = new RestHelper(_BaseAddress);
             string ParameterKey = "VariableDate";
             DateTime ParameterValue = DateTime.Now;
             string result;
-            #endregion
 
-            #region Act
-            restHelper.AddParameter(ParameterKey, ParameterValue);
+            var Parameters = new Dictionary<string, object>();
+            Parameters.Add(ParameterKey, ParameterValue);
+
             using (WebApp.Start<WebApiStartup>(_BaseAddress))
             {
-                result = await restHelper.ExecuteAsync<string>(ResourceURL, MethodType);
+                result = await restHelper.ExecuteGetAsync<string>(ResourceURL, Parameters);
             }
-            #endregion
-
-            #region Assert
             return (string.Format("{0}={1}", ParameterKey, ParameterValue) == result);
-            #endregion
 
         }
 
@@ -147,10 +129,9 @@ namespace RestHelper.UnitTest
         public async Task<bool> CallComplexRefTypeParamAPI_ServerRunning_GetResponseWithParamatersNameValueAppended(string ResourceURL, HttpMethod MethodType)
         {
 
-            #region Arrange
             var restHelper = new RestHelper(_BaseAddress);
 
-            string ParameterKey1 = "VariableStr";
+            string ParameterKey1 = "ParameterComplexRefType";
             string ParameterValueStr = "Jia";
 
             string ParameterKey2 = "VariableInt";
@@ -170,23 +151,19 @@ namespace RestHelper.UnitTest
                 VariableStr = ParameterValueStr
             };
             string result;
-            #endregion
+            var Parameters = new Dictionary<string, object>();
+            Parameters.Add("ParameterComplexRefType", ParameterComplexRefType);
 
-            #region Act
-            restHelper.AddParameter("ParameterComplexRefType", ParameterComplexRefType);
             using (WebApp.Start<WebApiStartup>(_BaseAddress))
             {
-                result = await restHelper.ExecuteAsync<string>(ResourceURL, MethodType);
+                result = await restHelper.ExecuteGetAsync<string>(ResourceURL, Parameters);
             }
-            #endregion
 
-            #region Assert
             return (string.Format("{0}={1}&{2}={3}&{4}={5}&{6}={7}",
                                         ParameterKey1, ParameterValueStr,
                                         ParameterKey2, ParameterValueInt,
                                         ParameterKey3, ParameterValueBool,
                                         ParameterKey4, ParameterValueDateTime) == result);
-            #endregion
 
         }
     }

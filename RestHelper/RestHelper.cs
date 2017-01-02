@@ -10,14 +10,14 @@ using System.Reflection;
 
 namespace RestHelper
 {
+    /// <summary>
+    /// RestHelper Class aids in Querying REST API's.
+    /// </summary>
     public class RestHelper
     {
         #region Private Properties
         private Uri _BaseUri;
         private HttpClient _HttpClient;
-        private ParameterList _ParameterList;
-        private string _ResourceURI;
-        private HttpMethod _HttpMethodType;
         #endregion
 
         #region Public Attributes
@@ -44,69 +44,64 @@ namespace RestHelper
         {
             this._BaseUri = new Uri(BaseUri);
             this._HttpClient = new HttpClient();
-            this._HttpClient.MaxResponseContentBufferSize = 256000;
-            this._ParameterList = new ParameterList();
-        }
-        #endregion
-
-        /// <summary>
-        /// Add Paramter
-        /// </summary>
-        /// <param name="Key">Paramter Name</param>
-        /// <param name="Value">Parameter Value</param>
-        public void AddParameter(string Key,object Value)
-        {
-            _ParameterList.AddParameter(Key, Value);
+            this._HttpClient.MaxResponseContentBufferSize = int.MaxValue;
         }
 
-        /// <summary>
-        /// Invoke the WebAPI mentioned using Base URL and Resource URL, with the parameters 
-        /// in parameter list.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="ResourceURL">URL to the Resource to be invoked</param>
-        /// <returns></returns>
-        public async Task<T> ExecuteAsync<T>(string ResourceURL, HttpMethod RequestType) 
-        {
-            this._ResourceURI = ResourceURL;
-            this._HttpMethodType = RequestType;
-
-            if (HttpMethod.Get == RequestType)
-            {
-                return await ExecuteGetAsync<T>();
-            }
-            
-            return default(T);
-        }
-
-        #region Private Methods
-        
-
-        /// <summary>
-        /// Builds the URI based on BaseURI and ResourceURI
-        /// </summary>
-        /// <returns>Resultant URI</returns>
-        private Uri BuildURI()
-        {
-            if(_HttpMethodType == HttpMethod.Get && _ParameterList.HasParameter)
-                return new Uri(_BaseUri, string.Format("{0}?{1}", _ResourceURI , _ParameterList.GetQueryString() ));
-            else
-                return new Uri(_BaseUri, _ResourceURI);
-        }
-
-
-
-        /// <summary>
-        /// Execute a Get Request at the API
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns>Return Value from the API</returns>
-        private async Task<T> ExecuteGetAsync<T>()
+        public async Task<T> ExecuteGetAsync<T>(string ResourceURI,string Key,object Value)
         {
             T result;
             try
             {
-                var response = await _HttpClient.GetAsync(BuildURI());
+                var Parameter = new ParameterInfo(HttpMethod.Get);
+                Parameter.AddParameter(Key, Value);
+                var completeURI = BuildURI(HttpMethod.Get, ResourceURI, Parameter);
+                result = await ExecuteGetAsync<T>(completeURI);
+                return result;
+            }
+            catch (Exception Ex)
+            {
+                string s = Ex.Message;
+                throw;
+            }
+            return default(T);
+        }
+
+        /// <summary>
+        /// Execute a GET Request on the Server
+        /// </summary>
+        /// <typeparam name="T">The Expected Return Type</typeparam>
+        /// <param name="ResourceURI">URI of the Resource</param>
+        /// <param name="Parameters">List of Parameters</param>
+        /// <returns>Value returned by the Web API</returns>
+        public async Task<T> ExecuteGetAsync<T>(string ResourceURI, Dictionary<string, object> Parameters = null)
+        {
+            T result;
+            try
+            {
+                var completeURI = Parameters == null ? BuildURI(HttpMethod.Get,ResourceURI) : BuildURI(HttpMethod.Get,ResourceURI, new ParameterInfo(HttpMethod.Get,Parameters));
+                result = await ExecuteGetAsync<T>(completeURI);
+                return result;
+            }
+            catch (Exception Ex)
+            {
+                string s = Ex.Message;
+                throw;
+            }
+
+            return default(T);
+        }
+
+        #endregion
+
+
+        #region Private Methods
+
+        private async Task<T> ExecuteGetAsync<T>(Uri CompleteURI)
+        {
+            T result;
+            try
+            {
+                var response = await _HttpClient.GetAsync(CompleteURI);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -120,12 +115,46 @@ namespace RestHelper
                 string s = Ex.Message;
                 throw;
             }
-
             return default(T);
         }
+        
+
+        /// <summary>
+        /// Builds Complete URI From BaseURI,ResourceURI and ParameterList
+        /// </summary>
+        /// <param name="Parameter"></param>
+        /// <param name="ResourceURI"></param>
+        /// <param name="MethodType"></param>
+        /// <returns></returns>
+        private Uri BuildURI(HttpMethod MethodType,string ResourceURI, ParameterInfo Parameter=null)
+        {
+            if(MethodType == HttpMethod.Get && Parameter !=null && Parameter.HasParameter)
+                return new Uri(_BaseUri, string.Format("{0}?{1}", ResourceURI, Parameter.GetQueryString() ));
+            else
+                return new Uri(_BaseUri, ResourceURI);
+        }
+
+
+        /// <summary>
+        /// Execute a Post Request at the API
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>Return value from the API</returns>
+        private Task<T> ExecutePostAsync<T,K>(K item)
+        {
+            //if(_ParameterList.HasParameter)
+            //{
+            //    var contend = new StringContent(JsonConvert.SerializeObject(item), Encoding.UTF8, "application/json");
+            //}
+            return null;
+        }
+
+
+       
  
 
     #endregion
 
     }
 }
+

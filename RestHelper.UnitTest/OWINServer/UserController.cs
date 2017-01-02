@@ -60,7 +60,7 @@ namespace RestHelper.UnitTest.OWINServer
 
         #endregion
 
-        #region Get Requests
+        #region Post Requests
 
         [HttpPost]
         [Route("")]

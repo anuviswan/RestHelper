@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,10 +11,25 @@ namespace RestHelper
     /// This class tracks and maintains the Parameters for the query
     /// Update 001: Remove Parameter as a separate class to adhere to SRP
     /// </summary>
-    internal class ParameterList
+    internal class ParameterInfo
     {
         #region Private Variables
         private Dictionary<string, object> _ParameterDictionary;
+        private HttpMethod _MethodType;
+        #endregion
+
+        #region Ctor
+        public ParameterInfo(HttpMethod MethodType)
+        {
+            _MethodType = MethodType;
+        }
+
+        public ParameterInfo(HttpMethod MethodType, Dictionary<string,object> ParameterList):this(MethodType)
+        {
+            if(ParameterList!=null)
+                _ParameterDictionary = new Dictionary<string, object>(ParameterList);
+
+        }
         #endregion
 
         #region Internal Methods
