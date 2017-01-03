@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RestPCL")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("EcSolvo.RestHelper")]
+[assembly: AssemblyDescription("Provides a Wrapper around the HTTPClient")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("RestPCL")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2016")]
+[assembly: AssemblyCompany("EcSolvo Technologies")]
+[assembly: AssemblyProduct("RestHelper")]
+[assembly: AssemblyCopyright("Copyright © EcSolvo Technologies 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]

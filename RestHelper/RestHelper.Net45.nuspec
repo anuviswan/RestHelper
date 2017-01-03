@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>EcSolvo.RestHelper</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>anuviswan</owners>
+    <projectUrl>https://github.com/anuviswan/RestHelper</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Provides a Wrapper around the HTTPClient</description>
+    <releaseNotes>Provides a Wrapper around the HTTPClient.</releaseNotes>
+    <copyright>$copyright$</copyright>
+    <tags>REST API WebAPI RESTApi HTTPClient Wrapper</tags>
+  </metadata>
+</package>
