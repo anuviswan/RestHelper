@@ -8,9 +8,9 @@ using System.Net.Http;
 namespace RestHelper.UnitTest
 {
     [TestClass]
-    public class RestHelperGetRequestTest:BaseTest
+    public class RestHelperGetRequestTest
     {
-
+        private string _BaseAddress = "http://localhost:8888/";
         [TestMethod]
         public async Task CallNoParamAPI_Get_GetResponseTrue()
         {
@@ -36,9 +36,27 @@ namespace RestHelper.UnitTest
         [TestMethod]
         public async Task CallSingleParamAPI_Get_GetResponseWithParamaterNameValueAppended()
         {
+
+            #region Arrange
             var resourceURL = "api/user/SingleParamStringResponse";
-            var result = await base.CallSingleParamAPI_ServerRunning_GetResponseWithParamaterNameValueAppended(resourceURL, HttpMethod.Get);
-            Assert.IsTrue(result);
+            var restHelper = new RestHelper(_BaseAddress);
+            string ParameterKey = "VariableStr";
+            string ParameterValue = "DummyString";
+            string result;
+            #endregion
+
+            #region Act
+            using (WebApp.Start<WebApiStartup>(_BaseAddress))
+            {
+                restHelper.AddQueryStringParameters(ParameterKey, ParameterValue);
+                result = await restHelper.ExecuteAsync<string>(HttpMethod.Get, resourceURL);
+            }
+            #endregion
+
+            #region Assert
+            Assert.AreEqual<string>(string.Format("{0}={1}", ParameterKey, ParameterValue), result);
+            #endregion
+
         }
 
         
@@ -47,9 +65,48 @@ namespace RestHelper.UnitTest
         public async Task CallComplexRefTypeParamAPI_Get_GetResponseWithParamatersNameValueAppended()
         {
 
+            #region Arrange
             var resourceURL = "api/user/ComplexReferenceTypeParamStringResponse";
-            var result = await base.CallComplexRefTypeParamAPI_ServerRunning_GetResponseWithParamatersNameValueAppended(resourceURL, HttpMethod.Get);
-            Assert.IsTrue(result);
+            var restHelper = new RestHelper(_BaseAddress);
+
+            string ParameterKey1 = "VariableStr";
+            string ParameterValueStr = "Jia";
+
+            string ParameterKey2 = "VariableInt";
+            int ParameterValueInt = 1;
+
+            string ParameterKey3 = "VariableBool";
+            bool ParameterValueBool = true;
+
+            string ParameterKey4 = "VariableDateTime";
+            DateTime ParameterValueDateTime = DateTime.Now;
+
+            ComplexRefType ParameterComplexRefType = new ComplexRefType()
+            {
+                VariableBool = ParameterValueBool,
+                VariableDateTime = ParameterValueDateTime,
+                VariableInt = ParameterValueInt,
+                VariableStr = ParameterValueStr
+            };
+            string result;
+            #endregion
+
+            #region Act
+            using (WebApp.Start<WebApiStartup>(_BaseAddress))
+            {
+                restHelper.AddQueryStringParameters("ParameterComplexRefType", ParameterComplexRefType);
+                result = await restHelper.ExecuteAsync<string>(HttpMethod.Get, resourceURL);
+            }
+            #endregion
+
+            #region Assert
+            Assert.AreEqual<string>(string.Format("{0}={1}&{2}={3}&{4}={5}&{6}={7}",
+                                        ParameterKey1, ParameterValueStr,
+                                        ParameterKey2, ParameterValueInt,
+                                        ParameterKey3, ParameterValueBool,
+                                        ParameterKey4, ParameterValueDateTime), result);
+            #endregion
+            
         }
     }
 }

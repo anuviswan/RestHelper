@@ -83,7 +83,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="BaseTest.cs" />
     <Compile Include="OWINServer\ComplexRefType.cs" />
     <Compile Include="OWINServer\UserController.cs" />
     <Compile Include="OWINServer\WebApiStartup.cs" />

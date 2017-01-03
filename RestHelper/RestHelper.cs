@@ -50,17 +50,32 @@ namespace RestHelper
         }
         #endregion
 
+        /// <summary>
+        /// Add Query String Parameters
+        /// </summary>
+        /// <param name="Key">Key to refer to the parameter</param>
+        /// <param name="Value">Value of Parameter</param>
         public void AddQueryStringParameters(string Key,dynamic Value)
         {
             this._ParameterInfo.AddQueryStringParameter(Key, Value);
         }
 
+        /// <summary>
+        /// Assign FromBody Parameter
+        /// </summary>
+        /// <param name="Value">Value of Parameter</param>
         public void AssignMessageBodyParameter(dynamic Value)
         {
             _ParameterInfo.AssignMessageBodyParameter(Value);
         }
 
-
+        /// <summary>
+        /// Execute the Rest API Request
+        /// </summary>
+        /// <typeparam name="TReturnValue">Expected Return Type</typeparam>
+        /// <param name="MethodType">HTTP Verb</param>
+        /// <param name="ResourceURI">URI of the called Resource</param>
+        /// <returns>Value returned by the API</returns>
         public async Task<TReturnValue> ExecuteAsync<TReturnValue>(HttpMethod MethodType,string ResourceURI)
         {
             TReturnValue result;
@@ -80,10 +95,15 @@ namespace RestHelper
         
 
         #region Private Methods
-
-        private async Task<T> ExecuteGetAsync<T>(Uri CompleteURI)
+        /// <summary>
+        /// Execute Get Request on the API
+        /// </summary>
+        /// <typeparam name="TReturnValue">Expected Return type</typeparam>
+        /// <param name="CompleteURI">Complete URI to Resource API</param>
+        /// <returns>Value returned by the API</returns>
+        private async Task<TReturnValue> ExecuteGetAsync<TReturnValue>(Uri CompleteURI)
         {
-            T result;
+            TReturnValue result;
             try
             {
                 var response = await _HttpClient.GetAsync(CompleteURI);
@@ -91,7 +111,7 @@ namespace RestHelper
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    result = JsonConvert.DeserializeObject<T>(content);
+                    result = JsonConvert.DeserializeObject<TReturnValue>(content);
                     return result;
                 }
             }
@@ -100,13 +120,18 @@ namespace RestHelper
                 string s = Ex.Message;
                 throw;
             }
-            return default(T);
+            return default(TReturnValue);
         }
         
-
-        private async Task<T> ExecutePostAsync<T>(Uri CompleteURI)
+        /// <summary>
+        /// Execute a POST Request on API
+        /// </summary>
+        /// <typeparam name="TReturnValue">Expected Return Type</typeparam>
+        /// <param name="CompleteURI">Complete URI to Resource API</param>
+        /// <returns>Value returned by the API</returns>
+        private async Task<TReturnValue> ExecutePostAsync<TReturnValue>(Uri CompleteURI)
         {
-            T result;
+            TReturnValue result;
             try
             {
                 var response = await _HttpClient.PostAsync(CompleteURI,_ParameterInfo.GetHTTPRequestContent());
@@ -114,7 +139,7 @@ namespace RestHelper
                 if(response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    result = JsonConvert.DeserializeObject<T>(content);
+                    result = JsonConvert.DeserializeObject<TReturnValue>(content);
                     return result;
                 }
             }
@@ -123,7 +148,7 @@ namespace RestHelper
                 string s = Ex.Message;
                 throw;
             }
-            return default(T);
+            return default(TReturnValue);
         }
 
         /// <summary>
