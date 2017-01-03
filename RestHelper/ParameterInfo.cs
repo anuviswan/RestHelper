@@ -15,7 +15,7 @@ namespace EcSolvo
     internal class ParameterInfo
     {
         #region Private Variables
-        private Dictionary<string, object> _QueryStringParameterDictionary;
+        private Dictionary<string, object> _URLParameterDictionary;
         private dynamic _MessageBodyParameter;
         #endregion
 
@@ -32,12 +32,12 @@ namespace EcSolvo
         /// </summary>
         /// <param name="Key">Name representing the parameter</param>
         /// <param name="Value">Value of the parameter</param>
-        internal void AddQueryStringParameter(string Key,dynamic Value)
+        internal void AddURLParameter(string Key,dynamic Value)
         {
-            if (_QueryStringParameterDictionary == null)
-                _QueryStringParameterDictionary = new Dictionary<string, dynamic>();
+            if (_URLParameterDictionary == null)
+                _URLParameterDictionary = new Dictionary<string, dynamic>();
 
-            _QueryStringParameterDictionary.Add(Key, Value);
+            _URLParameterDictionary.Add(Key, Value);
         }
 
         
@@ -49,7 +49,7 @@ namespace EcSolvo
         {
             if (HasParameter)
             {
-                var queryString = String.Join("&", _QueryStringParameterDictionary
+                var queryString = String.Join("&", _URLParameterDictionary
                                     .Select(kvp => String.Format("{0}={1}",
                                     System.Net.WebUtility.UrlEncode(kvp.Key),
                                     System.Net.WebUtility.UrlEncode(Convert.ToString(kvp.Value)))).ToArray());
@@ -78,10 +78,10 @@ namespace EcSolvo
         {
             get
             {
-                if (_QueryStringParameterDictionary == null)
+                if (_URLParameterDictionary == null)
                     return false;
                 else
-                    return _QueryStringParameterDictionary.Count > 0;
+                    return _URLParameterDictionary.Count > 0;
             }
         }
         #endregion

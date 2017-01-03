@@ -55,9 +55,9 @@ namespace EcSolvo
         /// </summary>
         /// <param name="Key">Key to refer to the parameter</param>
         /// <param name="Value">Value of Parameter</param>
-        public void AddQueryStringParameters(string Key,dynamic Value)
+        public void AddURLParameters(string Key,dynamic Value)
         {
-            this._ParameterInfo.AddQueryStringParameter(Key, Value);
+            this._ParameterInfo.AddURLParameter(Key, Value);
         }
 
         /// <summary>

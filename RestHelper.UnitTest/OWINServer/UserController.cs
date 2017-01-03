@@ -42,9 +42,9 @@ namespace EcSolvoRestHelper.UnitTest.OWINServer
 
         [HttpGet]
         [Route("")]
-        public string MultipleTypeParamStringResponse(string VariableStr, int VariableInt, bool VariableBool)
+        public string MultipleTypeParamStringResponse(string VariableStr, int VariableInt, DateTime VariableDateTime)
         {
-            return string.Format("VariableStr={0}&VariableInt={1}&VariableBool={2}", VariableStr,VariableInt,VariableBool);
+            return string.Format("VariableStr={0}&VariableInt={1}&VariableDateTime={2}", VariableStr,VariableInt, VariableDateTime);
         }
 
         [HttpGet]
