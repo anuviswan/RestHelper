@@ -8,8 +8,8 @@
     <ProjectGuid>{3EAD9A45-38CE-4AA0-9D70-7BEBBDCCC514}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RestHelper</RootNamespace>
-    <AssemblyName>RestHelper</AssemblyName>
+    <RootNamespace>EcSolvo.RestHelper</RootNamespace>
+    <AssemblyName>EcSolvo.RestHelper</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

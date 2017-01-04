@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 
 
-namespace RestHelper
+namespace EcSolvo
 {
     /// <summary>
     /// RestHelper Class aids in Querying REST API's.

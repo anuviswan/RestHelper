@@ -1,6 +1,6 @@
 ﻿using Microsoft.Owin.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RestHelper.UnitTest.OWINServer;
+using EcSolvoRestHelper.UnitTest.OWINServer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RestHelper.UnitTest
+namespace EcSolvoRestHelper.UnitTest
 {
     [TestClass]
     public class RestHelperPostRequestTest 
@@ -20,7 +20,7 @@ namespace RestHelper.UnitTest
 
             #region Arrange
             var resourceURL = "api/user/PostSingleParamStringResponse";
-            var restHelper = new RestHelper(_BaseAddress);
+            var restHelper = new EcSolvo.RestHelper(_BaseAddress);
             string ParameterValue = "DummyString";
             string result;
             #endregion
@@ -48,7 +48,7 @@ namespace RestHelper.UnitTest
 
             #region Arrange
             var resourceURL = "api/user/PostComplexReferenceTypeParamStringResponse";
-            var restHelper = new RestHelper(_BaseAddress);
+            var restHelper = new EcSolvo.RestHelper(_BaseAddress);
 
             string ParameterKey1 = "VariableStr";
             string ParameterValueStr = "Jia";

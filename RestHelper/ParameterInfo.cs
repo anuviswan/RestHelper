@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RestHelper
+namespace EcSolvo
 {
     /// <summary>
     /// This class tracks and maintains the Parameters for the query

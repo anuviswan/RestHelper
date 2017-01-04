@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RestHelper.UnitTest.OWINServer
+namespace EcSolvoRestHelper.UnitTest.OWINServer
 {
     public class ComplexRefType
     {
