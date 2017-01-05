@@ -64,7 +64,7 @@ namespace EcSolvoRestHelper.UnitTest
         {
 
             #region Arrange
-            var resourceURL = "api/user/MultipleParamStringResponse";
+            var resourceURL = "api/user/GetMultipleParamStringResponse";
             var restHelper = new EcSolvo.RestHelper(_BaseAddress);
             string ParameterKey1 = "VariableStr1";
             string ParameterValue1 = "DummyString1";
@@ -94,7 +94,7 @@ namespace EcSolvoRestHelper.UnitTest
         {
 
             #region Arrange
-            var resourceURL = "api/user/MultipleTypeParamStringResponse";
+            var resourceURL = "api/user/GetMultipleTypeParamStringResponse";
             var restHelper = new EcSolvo.RestHelper(_BaseAddress);
             string ParameterKey1 = "VariableStr";
             string ParameterValue1 = "DummyString1";
@@ -130,7 +130,8 @@ namespace EcSolvoRestHelper.UnitTest
         {
 
             #region Arrange
-            var resourceURL = "api/user/ComplexReferenceTypeParamStringResponse";
+            //var resourceURL = @"http://localhost:32662/api/user/ComplexReferenceTypeParamStringResponse";
+            var resourceURL = @"/api/user/GetComplexReferenceTypeParamStringResponse";
             var restHelper = new EcSolvo.RestHelper(_BaseAddress);
 
             string ParameterKey1 = "VariableStr";
@@ -158,7 +159,8 @@ namespace EcSolvoRestHelper.UnitTest
             #region Act
             using (WebApp.Start<WebApiStartup>(_BaseAddress))
             {
-                restHelper.AddURLParameters("ParameterComplexRefType", ParameterComplexRefType);
+                restHelper.AddURLParameters("VariableComplexRef", ParameterComplexRefType);
+                restHelper.AddURLParameters("DummyStr", "DummyStr");
                 result = await restHelper.ExecuteAsync<string>(HttpMethod.Get, resourceURL);
             }
             #endregion

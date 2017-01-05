@@ -11,7 +11,7 @@ namespace EcSolvoRestHelper.UnitTest.OWINServer
     public class UserController : ApiController
     {
         #region Get Requests
-        
+
         [HttpGet]
         [Route("")]
         public bool WithoutParamBooleanResponse()
@@ -33,27 +33,27 @@ namespace EcSolvoRestHelper.UnitTest.OWINServer
             return string.Format("{0}={1}", "VariableDate", VariableDate);
         }
 
-        [HttpGet]
-        [Route("")]
-        public string MultipleParamStringResponse(string VariableStr1, string VariableStr2)
+
+        
+        public string GetMultipleParamStringResponse(string VariableStr1, string VariableStr2)
         {
             return string.Format("{0}={1}&{2}={3}", "VariableStr1", VariableStr1, "VariableStr2", VariableStr2);
         }
 
-        [HttpGet]
-        [Route("")]
-        public string MultipleTypeParamStringResponse(string VariableStr, int VariableInt, DateTime VariableDateTime)
+        [Route("api/user/MultipleParamStringResponse")]
+        public string GetMultipleTypeParamStringResponse(string VariableStr, int VariableInt, DateTime VariableDateTime)
         {
-            return string.Format("VariableStr={0}&VariableInt={1}&VariableDateTime={2}", VariableStr,VariableInt, VariableDateTime);
+            return string.Format("VariableStr={0}&VariableInt={1}&VariableDateTime={2}", VariableStr, VariableInt, VariableDateTime);
         }
 
-        [HttpGet]
-        [Route("")]
-        public string ComplexReferenceTypeParamStringResponse([FromUri]ComplexRefType VariableComplexRef,string DummyParam)
+
+       
+        [Route("api/user/GetComplexReferenceTypeParamStringResponse")]
+        public string GetComplexReferenceTypeParamStringResponse([FromUri]ComplexRefType VariableComplexRef, string DummyStr)
         {
-            return string.Format("VariableStr={0}&VariableInt={1}&VariableBool={2}&VariableDateTime={3}", 
-                                    VariableComplexRef.VariableStr, 
-                                    VariableComplexRef.VariableInt, 
+            return string.Format("VariableStr={0}&VariableInt={1}&VariableBool={2}&VariableDateTime={3}",
+                                    VariableComplexRef.VariableStr,
+                                    VariableComplexRef.VariableInt,
                                     VariableComplexRef.VariableBool,
                                     VariableComplexRef.VariableDateTime);
         }
@@ -63,14 +63,14 @@ namespace EcSolvoRestHelper.UnitTest.OWINServer
         #region Post Requests
 
         [HttpPost]
-        [Route("")]
+        [Route("api/user/PostDateTimeParamStringResponse")]
         public string PostDateTimeParamStringResponse(DateTime VariableDate)
         {
             return string.Format("{0}={1}", "VariableDate", VariableDate);
         }
 
         [HttpPost]
-        [Route("")]
+        [Route("api/user/PostMultipleParamStringResponse")]
         public string PostMultipleParamStringResponse(string VariableStr1, string VariableStr2)
         {
             return string.Format("{0}={1}&{2}={3}", "VariableStr1", VariableStr1, "VariableStr2", VariableStr2);
@@ -84,7 +84,7 @@ namespace EcSolvoRestHelper.UnitTest.OWINServer
         }
 
         [HttpPost]
-        [Route("")]
+        [Route("api/user/PostComplexReferenceTypeParamStringResponse")]
         public string PostComplexReferenceTypeParamStringResponse(ComplexRefType VariableComplexRef)
         {
             return string.Format("VariableStr={0}&VariableInt={1}&VariableBool={2}&VariableDateTime={3}",

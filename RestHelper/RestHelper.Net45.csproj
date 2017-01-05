@@ -8,7 +8,7 @@
     <ProjectGuid>{3EAD9A45-38CE-4AA0-9D70-7BEBBDCCC514}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EcSolvo.RestHelper</RootNamespace>
+    <RootNamespace>EcSolvo</RootNamespace>
     <AssemblyName>EcSolvo.RestHelper</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
@@ -37,6 +37,7 @@
     <Compile Include="ParameterInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestHelper.cs" />
+    <Compile Include="UriHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">

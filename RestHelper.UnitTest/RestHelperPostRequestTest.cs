@@ -19,22 +19,22 @@ namespace EcSolvoRestHelper.UnitTest
         {
 
             #region Arrange
-            var resourceURL = "api/user/PostSingleParamStringResponse";
+            var resourceURL = "api/user/PostDateTimeParamStringResponse";
             var restHelper = new EcSolvo.RestHelper(_BaseAddress);
-            string ParameterValue = "DummyString";
-            string result;
+            DateTime Parameter = DateTime.Now;
+            DateTime result;
             #endregion
 
             #region Act
             using (WebApp.Start<WebApiStartup>(_BaseAddress))
             {
-                restHelper.AssignMessageBodyParameter(ParameterValue);
-                result = await restHelper.ExecuteAsync<string>(HttpMethod.Post, resourceURL);
+                restHelper.AssignMessageBodyParameter(Parameter);
+                result = await restHelper.ExecuteAsync<DateTime>(HttpMethod.Post, resourceURL);
             }
             #endregion
 
             #region Assert
-            Assert.AreEqual<string>(ParameterValue, result);
+            Assert.AreEqual<DateTime>(Parameter, result);
             #endregion
         }
 
@@ -43,8 +43,6 @@ namespace EcSolvoRestHelper.UnitTest
         [TestMethod]
         public async Task CallComplexRefTypeParamAPI_Post_GetResponseWithParamatersNameValueAppended()
         {
-
-
 
             #region Arrange
             var resourceURL = "api/user/PostComplexReferenceTypeParamStringResponse";

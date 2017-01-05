@@ -49,12 +49,16 @@ namespace EcSolvo
         {
             if (HasParameter)
             {
-                var queryString = String.Join("&", _URLParameterDictionary
-                                    .Select(kvp => String.Format("{0}={1}",
-                                    System.Net.WebUtility.UrlEncode(kvp.Key),
-                                    System.Net.WebUtility.UrlEncode(Convert.ToString(kvp.Value)))).ToArray());
+                List<string> parameters = new List<string>();
+                foreach (var param in _URLParameterDictionary)
+                {
+                    if (UrlHelpers.IsPrimitiveType(param.Value.GetType()))
+                        parameters.Add(string.Format("{0}={1}", param.Key, param.Value));
+                    else
+                        parameters.Add(param.Value.ToQueryString());
+                }
 
-                return queryString;
+                return string.Join("&",parameters.ToArray());
             }
             else
                     return string.Empty;
