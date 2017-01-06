@@ -32,7 +32,7 @@ namespace EcSolvo
         /// </summary>
         /// <param name="Key">Name representing the parameter</param>
         /// <param name="Value">Value of the parameter</param>
-        internal void AddURLParameter(string Key,dynamic Value)
+        internal void AddURLParameter<PValue>(string Key, PValue Value)
         {
             if (_URLParameterDictionary == null)
                 _URLParameterDictionary = new Dictionary<string, dynamic>();
@@ -52,7 +52,7 @@ namespace EcSolvo
                 List<string> parameters = new List<string>();
                 foreach (var param in _URLParameterDictionary)
                 {
-                    if (UrlHelpers.IsPrimitiveType(param.Value.GetType()))
+                    if (param.Value.GetType().IsPrimitiveType())
                         parameters.Add(string.Format("{0}={1}", param.Key, param.Value));
                     else
                         parameters.Add(param.Value.ToQueryString());

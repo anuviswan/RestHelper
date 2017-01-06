@@ -54,6 +54,11 @@ namespace EcSolvo
                 throw new ArgumentNullException("Request Object Null");
             }
 
+            //if(RequestObject.GetType().IsArray && RequestObject.GetType().GetElementType().IsPrimitiveType())
+            //{
+               
+            //}
+
             StringBuilder propertyQuery = new StringBuilder();
 
             // Get all primitive properties on the object 

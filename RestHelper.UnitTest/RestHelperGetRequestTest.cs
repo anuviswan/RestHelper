@@ -236,6 +236,40 @@ namespace EcSolvoRestHelper.UnitTest
             #endregion
 
         }
+
+        [TestMethod]
+        public async Task CallIntArrayParamAPI_Get_GetResponseWithParamatersNameValueAppended()
+        {
+
+            #region Arrange
+
+            var resourceURL = @"/api/user/GetIntArrayStringResponse";
+            var restHelper = new EcSolvo.RestHelper(_BaseAddress);
+
+            var ParameterKey = "ArrayObject";
+            var ParameterArray = new int[] { 2,3,4};
+
+            string result;
+            #endregion
+
+            #region Act
+            using (WebApp.Start<WebApiStartup>(_BaseAddress))
+            {
+                restHelper.AddURLParameters(ParameterKey, ParameterArray);
+                result = await restHelper.ExecuteAsync<string>(HttpMethod.Get, resourceURL);
+            }
+
+
+            #endregion
+
+            #region Assert
+            Assert.AreEqual<string>(string.Format("{0}-{1},{2},{3}",
+                                    ParameterKey,ParameterArray[0],
+                                    ParameterArray[1], ParameterArray[2]
+                                    ), result);
+            #endregion
+
+        }
     }
 }
 

@@ -26,15 +26,6 @@ namespace EcSolvoRestHelper.UnitTest.OWINServer
             return string.Format("{0}={1}", "VariableStr", VariableStr);
         }
 
-        [HttpGet]
-        [Route("")]
-        public string DateTimeParamStringResponse(DateTime VariableDate)
-        {
-            return string.Format("{0}={1}", "VariableDate", VariableDate);
-        }
-
-
-        
         public string GetMultipleParamStringResponse(string VariableStr1, string VariableStr2)
         {
             return string.Format("{0}={1}&{2}={3}", "VariableStr1", VariableStr1, "VariableStr2", VariableStr2);
@@ -66,6 +57,12 @@ namespace EcSolvoRestHelper.UnitTest.OWINServer
                                     VariableNestedComplexRef.InnerVariableComplex.VariableInt,
                                     VariableNestedComplexRef.InnerVariableComplex.VariableBool,
                                     VariableNestedComplexRef.InnerVariableComplex.VariableDateTime);
+        }
+
+        [Route("api/user/GetIntArrayStringResponse")]
+        public string GetIntArrayStringResponse([FromUri] int[] ArrayObject)
+        {
+            return string.Format("ArrayObject-{0}{1}{2}",ArrayObject[0], ArrayObject[1], ArrayObject[2]);
         }
 
         #endregion
@@ -117,6 +114,12 @@ namespace EcSolvoRestHelper.UnitTest.OWINServer
                                     VariableNestedComplexRef.InnerVariableComplex.VariableDateTime);
         }
 
+        [HttpPost]
+        [Route("api/user/PostIntArrayStringResponse")]
+        public string PostIntArrayStringResponse([FromBody]int[] ArrayObject)
+        {
+            return string.Format("ArrayObject-{0}{1}{2}", ArrayObject[0], ArrayObject[1], ArrayObject[2]);
+        }
         #endregion
     }
 }
