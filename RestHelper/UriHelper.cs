@@ -10,13 +10,23 @@ namespace EcSolvo
 {
     public static class UrlHelpers
     {
-        public static bool IsPrimitiveType(object t)
+        /// <summary>
+        /// Checks if the DataType is Primitive
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        internal static bool IsPrimitiveType(Type t)
         {
             return (t.GetType().GetTypeInfo().IsPrimitive 
                 || t == typeof(Decimal) 
                 || t == typeof(String) 
                 || t == typeof(DateTime) 
+                || t == typeof(Int16)
                 || t == typeof(Int32)
+                || t == typeof(Int64)
+                || t == typeof(UInt16)
+                || t == typeof(UInt32)
+                || t == typeof(UInt64)
                 || t == typeof(Boolean));
         }
 
@@ -29,7 +39,7 @@ namespace EcSolvo
         /// <param name="separator"> The separator. </param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentNullException"> request </exception>
-        public static string ToQueryString(this object request, string innerPropertyName = null, string separator = ",")
+        internal static string ToQueryString(this object request, string innerPropertyName = null, string separator = ",")
         {
             if (request == null)
             {
@@ -44,9 +54,6 @@ namespace EcSolvo
                 .Where(x => x.GetValue(request, null) != null)
                 .Where(x=> IsPrimitiveType(x.PropertyType))
                 .ToDictionary(x => x.Name, x => x.GetValue(request, null));
-            //.Where(x => !x.GetType().GetTypeInfo().IsClass || (x.GetType().GetTypeInfo().IsClass && x.PropertyType.FullName == "System.String"))
-
-
 
 
             foreach (KeyValuePair<string, object> kvp in properties)
@@ -118,7 +125,11 @@ namespace EcSolvo
                 propertyQuery.AppendFormat(ToQueryString(className.Value, className.Key));
             }
 
-            return propertyQuery.ToString().Remove(propertyQuery.ToString().Length-1);
+            if(propertyQuery.ToString()[propertyQuery.ToString().Length - 1]=='&')
+                return propertyQuery.ToString().Remove(propertyQuery.ToString().Length - 1);
+            else
+                return propertyQuery.ToString();
         }
     }
 }
+

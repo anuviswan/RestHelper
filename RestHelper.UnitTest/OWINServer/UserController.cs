@@ -46,7 +46,6 @@ namespace EcSolvoRestHelper.UnitTest.OWINServer
             return string.Format("VariableStr={0}&VariableInt={1}&VariableDateTime={2}", VariableStr, VariableInt, VariableDateTime);
         }
 
-
        
         [Route("api/user/GetComplexReferenceTypeParamStringResponse")]
         public string GetComplexReferenceTypeParamStringResponse([FromUri]ComplexRefType VariableComplexRef, string DummyStr)
@@ -58,15 +57,26 @@ namespace EcSolvoRestHelper.UnitTest.OWINServer
                                     VariableComplexRef.VariableDateTime);
         }
 
+        [Route("api/user/GetNestedComplexReferenceTypeParamStringResponse")]
+        public string GetNestedComplexReferenceTypeParamStringResponse([FromUri]NestedComplexRefType VariableNestedComplexRef, string DummyStr1,string DummyStr2)
+        {
+            return string.Format("OuterVariableStr={0}&VariableStr={1}&VariableInt={2}&VariableBool={3}&VariableDateTime={4}",
+                                    VariableNestedComplexRef.OuterVariableStr,
+                                    VariableNestedComplexRef.InnerVariableComplex.VariableStr,
+                                    VariableNestedComplexRef.InnerVariableComplex.VariableInt,
+                                    VariableNestedComplexRef.InnerVariableComplex.VariableBool,
+                                    VariableNestedComplexRef.InnerVariableComplex.VariableDateTime);
+        }
+
         #endregion
 
         #region Post Requests
 
         [HttpPost]
         [Route("api/user/PostDateTimeParamStringResponse")]
-        public string PostDateTimeParamStringResponse(DateTime VariableDate)
+        public string PostDateTimeParamStringResponse([FromBody]string VariableStr)
         {
-            return string.Format("{0}={1}", "VariableDate", VariableDate);
+            return VariableStr;
         }
 
         [HttpPost]
@@ -92,6 +102,19 @@ namespace EcSolvoRestHelper.UnitTest.OWINServer
                                     VariableComplexRef.VariableInt,
                                     VariableComplexRef.VariableBool,
                                     VariableComplexRef.VariableDateTime);
+        }
+
+
+        [HttpPost]
+        [Route("api/user/PostNestedComplexReferenceTypeParamStringResponse")]
+        public string PostNestedComplexReferenceTypeParamStringResponse(NestedComplexRefType VariableNestedComplexRef)
+        {
+            return string.Format("OuterVariableStr={0}&VariableStr={1}&VariableInt={2}&VariableBool={3}&VariableDateTime={4}",
+                                    VariableNestedComplexRef.OuterVariableStr,
+                                    VariableNestedComplexRef.InnerVariableComplex.VariableStr,
+                                    VariableNestedComplexRef.InnerVariableComplex.VariableInt,
+                                    VariableNestedComplexRef.InnerVariableComplex.VariableBool,
+                                    VariableNestedComplexRef.InnerVariableComplex.VariableDateTime);
         }
 
         #endregion

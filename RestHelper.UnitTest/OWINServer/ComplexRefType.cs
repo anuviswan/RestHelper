@@ -13,4 +13,13 @@ namespace EcSolvoRestHelper.UnitTest.OWINServer
         public bool VariableBool { get; set; }
         public DateTime VariableDateTime { get; set; }
     }
+
+
+    public class NestedComplexRefType
+    {
+        public string OuterVariableStr { get; set; }
+        public ComplexRefType InnerVariableComplex { get; set; }
+    }
+
+
 }

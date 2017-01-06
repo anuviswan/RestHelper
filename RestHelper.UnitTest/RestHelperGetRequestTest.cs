@@ -130,7 +130,6 @@ namespace EcSolvoRestHelper.UnitTest
         {
 
             #region Arrange
-            //var resourceURL = @"http://localhost:32662/api/user/ComplexReferenceTypeParamStringResponse";
             var resourceURL = @"/api/user/GetComplexReferenceTypeParamStringResponse";
             var restHelper = new EcSolvo.RestHelper(_BaseAddress);
 
@@ -173,6 +172,69 @@ namespace EcSolvoRestHelper.UnitTest
                                         ParameterKey4, ParameterValueDateTime), result);
             #endregion
             
+        }
+
+        [TestMethod]
+        public async Task CallNestedComplexRefTypeParamAPI_Get_GetResponseWithParamatersNameValueAppended()
+        {
+
+            #region Arrange
+            
+            var resourceURL = @"/api/user/GetNestedComplexReferenceTypeParamStringResponse";
+            var restHelper = new EcSolvo.RestHelper(_BaseAddress);
+
+            string ParameterKey1 = "VariableStr";
+            string ParameterValueStr = "Jia";
+
+            string ParameterKey2 = "VariableInt";
+            int ParameterValueInt = 1;
+
+            string ParameterKey3 = "VariableBool";
+            bool ParameterValueBool = true;
+
+            string ParameterKey4 = "VariableDateTime";
+            DateTime ParameterValueDateTime = DateTime.Now;
+
+            string ParameterKey5 = "OuterVariableStr";
+            string OuterParameterValueStr = "Outer";
+
+            ComplexRefType ParameterComplexRefType = new ComplexRefType()
+            {
+                VariableBool = ParameterValueBool,
+                VariableDateTime = ParameterValueDateTime,
+                VariableInt = ParameterValueInt,
+                VariableStr = ParameterValueStr
+            };
+
+            NestedComplexRefType ParameterNestedComplexRefType = new NestedComplexRefType()
+            {
+                InnerVariableComplex = ParameterComplexRefType,
+                OuterVariableStr = OuterParameterValueStr
+            };
+            string result;
+            #endregion
+
+            #region Act
+            using (WebApp.Start<WebApiStartup>(_BaseAddress))
+            {
+                restHelper.AddURLParameters("VariableNestedComplexRef", ParameterNestedComplexRefType);
+                restHelper.AddURLParameters("DummyStr1", "DummyStr");
+                restHelper.AddURLParameters("DummyStr2", "DummyStr");
+                result = await restHelper.ExecuteAsync<string>(HttpMethod.Get, resourceURL);
+            }
+
+
+            #endregion
+
+            #region Assert
+            Assert.AreEqual<string>(string.Format("{0}={1}&{2}={3}&{4}={5}&{6}={7}&{8}={9}",
+                                    ParameterKey5, OuterParameterValueStr,
+                                    ParameterKey1, ParameterValueStr,
+                                    ParameterKey2, ParameterValueInt,
+                                    ParameterKey3, ParameterValueBool,
+                                    ParameterKey4, ParameterValueDateTime), result);
+            #endregion
+
         }
     }
 }
