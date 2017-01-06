@@ -13,75 +13,81 @@ namespace EcSolvo
         /// <summary>
         /// Checks if the DataType is Primitive
         /// </summary>
-        /// <param name="t"></param>
-        /// <returns></returns>
-        internal static bool IsPrimitiveType(Type t)
+        /// <returns>A Boolean Value indicating if the data type if primitive or not</returns>
+        internal static bool IsPrimitiveType(this Type DataType)
         {
-            return (t.GetType().GetTypeInfo().IsPrimitive 
-                || t == typeof(Decimal) 
-                || t == typeof(String) 
-                || t == typeof(DateTime) 
-                || t == typeof(Int16)
-                || t == typeof(Int32)
-                || t == typeof(Int64)
-                || t == typeof(UInt16)
-                || t == typeof(UInt32)
-                || t == typeof(UInt64)
-                || t == typeof(Boolean));
+            return (DataType.GetTypeInfo().IsPrimitive
+                || DataType == typeof(Byte)
+                || DataType == typeof(SByte)
+                || DataType == typeof(Int32)
+                || DataType == typeof(UInt32)
+                || DataType == typeof(Int16)
+                || DataType == typeof(UInt16)
+                || DataType == typeof(Int64)
+                || DataType == typeof(UInt64)
+                || DataType == typeof(Single)
+                || DataType == typeof(Double)
+                || DataType == typeof(Char)
+                || DataType == typeof(Boolean)
+                || DataType == typeof(Object)
+                || DataType == typeof(String)
+                || DataType == typeof(Decimal)
+                || DataType == typeof(DateTime)
+                || DataType == typeof(TimeSpan)
+                );
         }
 
 
 
         /// <summary>
-        /// To the query string. http://ole.michelsen.dk/blog/serialize-object-into-a-query-string-with-reflection.html 
+        /// Convert the object to Query String format.
+        /// A Spin off based on the code written by Ole Michelsen
         /// </summary>
-        /// <param name="request"> The request. </param>
+        /// <param name="RequestObject"> The request. </param>
         /// <param name="separator"> The separator. </param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentNullException"> request </exception>
-        internal static string ToQueryString(this object request, string innerPropertyName = null, string separator = ",")
+        internal static string ToQueryString(this object RequestObject, string InnerPropertyName = null)
         {
-            if (request == null)
+            if (RequestObject == null)
             {
-                throw new ArgumentNullException("request");
+                throw new ArgumentNullException("Request Object Null");
             }
 
             StringBuilder propertyQuery = new StringBuilder();
 
             // Get all primitive properties on the object 
-            var properties = request.GetType().GetRuntimeProperties()
-                .Where(x => x.CanRead)
-                .Where(x => x.GetValue(request, null) != null)
-                .Where(x=> IsPrimitiveType(x.PropertyType))
-                .ToDictionary(x => x.Name, x => x.GetValue(request, null));
+            var properties = RequestObject.GetType().GetRuntimeProperties()
+                                          .Where(x => x.CanRead)
+                                          .Where(x => x.GetValue(RequestObject, null) != null)
+                                          .Where(x=> x.PropertyType.IsPrimitiveType())
+                                          .ToDictionary(x => x.Name, x => x.GetValue(RequestObject, null));
 
-
+            // Form the Query String for Primitive Types
             foreach (KeyValuePair<string, object> kvp in properties)
             {
-                if (string.IsNullOrEmpty(innerPropertyName))
-                {
+                if (string.IsNullOrEmpty(InnerPropertyName))
                     propertyQuery.AppendFormat("{0}={1}", Uri.EscapeDataString(kvp.Key), Uri.EscapeDataString(kvp.Value.ToString()));
-                }
                 else
-                {
-                    propertyQuery.AppendFormat("{0}.{1}={2}", Uri.EscapeDataString(innerPropertyName), Uri.EscapeDataString(kvp.Key), Uri.EscapeDataString(kvp.Value.ToString()));
-                }
+                    propertyQuery.AppendFormat("{0}.{1}={2}", Uri.EscapeDataString(InnerPropertyName), Uri.EscapeDataString(kvp.Key), Uri.EscapeDataString(kvp.Value.ToString()));
+
                 propertyQuery.AppendFormat("&");
             }
 
-            var innerClass = request.GetType().GetRuntimeProperties()
-                .Where(x => x.CanRead)
-                .Where(x => x.GetValue(request, null) != null)
-                .Where(x => !IsPrimitiveType(x.PropertyType))
-                .ToDictionary(x => x.Name, x => x.GetValue(request, null));
+            // Get all Inner Classes on the object
+            var innerClass = RequestObject.GetType().GetRuntimeProperties()
+                                        .Where(x => x.CanRead)
+                                        .Where(x => x.GetValue(RequestObject, null) != null)
+                                        .Where(x => !x.PropertyType.IsPrimitiveType())
+                                        .ToDictionary(x => x.Name, x => x.GetValue(RequestObject, null));
 
             // Get names for all IEnumerable properties (excl. string) 
-            var propertyCollectionNames = request.GetType().GetRuntimeProperties()
-                .Where(x => x.CanRead)
-                .Where(x => x.GetValue(request, null) != null)
-                .ToDictionary(x => x.Name, x => x.GetValue(request, null))
-                .Where(x => !(x.Value is string) && x.Value is IEnumerable)
-                .ToDictionary(x => x.Key, x => x.Value);
+            var propertyCollectionNames = RequestObject.GetType().GetRuntimeProperties()
+                                        .Where(x => x.CanRead)
+                                        .Where(x => x.GetValue(RequestObject, null) != null)
+                                        .ToDictionary(x => x.Name, x => x.GetValue(RequestObject, null))
+                                        .Where(x => !(x.Value is string) && x.Value is IEnumerable)
+                                        .ToDictionary(x => x.Key, x => x.Value);
 
             // Concat all IEnumerable properties into a comma separated string 
             foreach (var kvp in propertyCollectionNames)
@@ -90,19 +96,19 @@ namespace EcSolvo
                 var valueElemType = valueType.GetTypeInfo().IsGenericType
                                         ? valueType.GetType().GetGenericTypeDefinition()
                                         : valueType.GetElementType();
-                if (valueElemType.GetTypeInfo().IsPrimitive || valueElemType == typeof(string)) // List of primitive value type or string
+                if (valueElemType.GetType().IsPrimitiveType() || valueElemType == typeof(string)) // List of primitive value type or string
                 {
                     var enumerable = kvp.Value as IEnumerable;
                     int count = 0;
                     foreach (object obj in enumerable)
                     {
-                        if (string.IsNullOrEmpty(innerPropertyName))
+                        if (string.IsNullOrEmpty(InnerPropertyName))
                         {
                             propertyQuery.AppendFormat("{0}[{1}]={2}", Uri.EscapeDataString(kvp.Key), count, Uri.EscapeDataString(obj.ToString()));
                         }
                         else
                         {
-                            propertyQuery.AppendFormat("{0}.{1}[{2}]={3}", Uri.EscapeDataString(innerPropertyName), Uri.EscapeDataString(kvp.Key), count, Uri.EscapeDataString(obj.ToString()));
+                            propertyQuery.AppendFormat("{0}.{1}[{2}]={3}", Uri.EscapeDataString(InnerPropertyName), Uri.EscapeDataString(kvp.Key), count, Uri.EscapeDataString(obj.ToString()));
                         }
                         count++;
                         propertyQuery.AppendFormat("&");
@@ -124,6 +130,7 @@ namespace EcSolvo
             {
                 propertyQuery.AppendFormat(ToQueryString(className.Value, className.Key));
             }
+
 
             if(propertyQuery.ToString()[propertyQuery.ToString().Length - 1]=='&')
                 return propertyQuery.ToString().Remove(propertyQuery.ToString().Length - 1);
