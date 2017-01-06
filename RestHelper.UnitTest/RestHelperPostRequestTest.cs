@@ -163,7 +163,49 @@ namespace EcSolvoRestHelper.UnitTest
             using (WebApp.Start<WebApiStartup>(_BaseAddress))
             {
                 restHelper.AssignMessageBodyParameter(ParameterArray);
-                result = await restHelper.ExecuteAsync<string>(HttpMethod.Get, resourceURL);
+                result = await restHelper.ExecuteAsync<string>(HttpMethod.Post, resourceURL);
+            }
+
+
+            #endregion
+
+            #region Assert
+            Assert.AreEqual<string>(string.Format("{0}-{1},{2},{3}",
+                                    ParameterKey, ParameterArray[0],
+                                    ParameterArray[1], ParameterArray[2]
+                                    ), result);
+            #endregion
+
+        }
+
+        [TestMethod]
+        public async Task CallComplexArrayParamAPI_Post_GetResponseWithParamatersNameValueAppended()
+        {
+
+            #region Arrange
+
+            var resourceURL = @"/api/user/PostIntArrayStringResponse";
+            var restHelper = new EcSolvo.RestHelper(_BaseAddress);
+
+            var ParameterKey = "ArrayObject";
+            bool ParameterBool = true;
+            int ParameterInt = 2;
+            DateTime ParameterDateTime = DateTime.Now;
+            string ParameterStr = "Jia";
+            var ParameterArray = new ComplexRefType[] {
+                new ComplexRefType() {VariableBool= ParameterBool,VariableDateTime=ParameterDateTime,VariableInt=ParameterInt,VariableStr=ParameterStr},
+                new ComplexRefType() {VariableBool= ParameterBool,VariableDateTime=ParameterDateTime,VariableInt=ParameterInt,VariableStr=ParameterStr},
+                new ComplexRefType() {VariableBool= ParameterBool,VariableDateTime=ParameterDateTime,VariableInt=ParameterInt,VariableStr=ParameterStr}
+                                        };
+
+            string result;
+            #endregion
+
+            #region Act
+            using (WebApp.Start<WebApiStartup>(_BaseAddress))
+            {
+                restHelper.AssignMessageBodyParameter(ParameterArray);
+                result = await restHelper.ExecuteAsync<string>(HttpMethod.Post, resourceURL);
             }
 
 

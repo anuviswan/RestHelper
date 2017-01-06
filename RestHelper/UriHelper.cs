@@ -47,17 +47,12 @@ namespace EcSolvo
         /// <param name="separator"> The separator. </param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentNullException"> request </exception>
-        internal static string ToQueryString(this object RequestObject, string InnerPropertyName = null)
+        internal static string ToQueryString<T>(this T RequestObject, string InnerPropertyName = null)
         {
             if (RequestObject == null)
             {
                 throw new ArgumentNullException("Request Object Null");
             }
-
-            //if(RequestObject.GetType().IsArray && RequestObject.GetType().GetElementType().IsPrimitiveType())
-            //{
-               
-            //}
 
             StringBuilder propertyQuery = new StringBuilder();
 
@@ -72,9 +67,14 @@ namespace EcSolvo
             foreach (KeyValuePair<string, object> kvp in properties)
             {
                 if (string.IsNullOrEmpty(InnerPropertyName))
-                    propertyQuery.AppendFormat("{0}={1}", Uri.EscapeDataString(kvp.Key), Uri.EscapeDataString(kvp.Value.ToString()));
+                    propertyQuery.AppendFormat("{0}={1}", 
+                        Uri.EscapeDataString(kvp.Key), 
+                        Uri.EscapeDataString(kvp.Value.ToString()));
                 else
-                    propertyQuery.AppendFormat("{0}.{1}={2}", Uri.EscapeDataString(InnerPropertyName), Uri.EscapeDataString(kvp.Key), Uri.EscapeDataString(kvp.Value.ToString()));
+                    propertyQuery.AppendFormat("{0}.{1}={2}", 
+                        Uri.EscapeDataString(InnerPropertyName), 
+                        Uri.EscapeDataString(kvp.Key), 
+                        Uri.EscapeDataString(kvp.Value.ToString()));
 
                 propertyQuery.AppendFormat("&");
             }
@@ -101,25 +101,32 @@ namespace EcSolvo
                 var valueElemType = valueType.GetTypeInfo().IsGenericType
                                         ? valueType.GetType().GetGenericTypeDefinition()
                                         : valueType.GetElementType();
+
                 if (valueElemType.GetType().IsPrimitiveType() || valueElemType == typeof(string)) // List of primitive value type or string
                 {
                     var enumerable = kvp.Value as IEnumerable;
                     int count = 0;
+
                     foreach (object obj in enumerable)
                     {
                         if (string.IsNullOrEmpty(InnerPropertyName))
                         {
-                            propertyQuery.AppendFormat("{0}[{1}]={2}", Uri.EscapeDataString(kvp.Key), count, Uri.EscapeDataString(obj.ToString()));
+                            propertyQuery.AppendFormat("{0}[{1}]={2}", 
+                                Uri.EscapeDataString(kvp.Key), count, 
+                                Uri.EscapeDataString(obj.ToString()));
                         }
                         else
                         {
-                            propertyQuery.AppendFormat("{0}.{1}[{2}]={3}", Uri.EscapeDataString(InnerPropertyName), Uri.EscapeDataString(kvp.Key), count, Uri.EscapeDataString(obj.ToString()));
+                            propertyQuery.AppendFormat("{0}.{1}[{2}]={3}", 
+                                Uri.EscapeDataString(InnerPropertyName), 
+                                Uri.EscapeDataString(kvp.Key), count, 
+                                Uri.EscapeDataString(obj.ToString()));
                         }
                         count++;
                         propertyQuery.AppendFormat("&");
                     }
                 }
-                else if (!IsPrimitiveType(valueElemType)) // list of class Objects
+                else if (!valueElemType.IsPrimitiveType()) // list of class Objects
                 {
                     int count = 0;
                     foreach (var className in kvp.Value as IEnumerable)

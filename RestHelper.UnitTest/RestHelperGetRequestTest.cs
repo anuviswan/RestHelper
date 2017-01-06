@@ -270,6 +270,48 @@ namespace EcSolvoRestHelper.UnitTest
             #endregion
 
         }
+
+        [TestMethod]
+        public async Task CallComplexArrayParamAPI_Get_GetResponseWithParamatersNameValueAppended()
+        {
+
+            #region Arrange
+
+            var resourceURL = @"/api/user/GetComplexArrayStringResponse";
+            var restHelper = new EcSolvo.RestHelper(_BaseAddress);
+
+            var ParameterKey = "ArrayObject";
+            bool ParameterBool = true;
+            int ParameterInt = 2;
+            DateTime ParameterDateTime = DateTime.Now;
+            string ParameterStr = "Jia";
+            var ParameterArray = new ComplexRefType[] {
+                new ComplexRefType() {VariableBool= ParameterBool,VariableDateTime=ParameterDateTime,VariableInt=ParameterInt,VariableStr=ParameterStr},
+                new ComplexRefType() {VariableBool= ParameterBool,VariableDateTime=ParameterDateTime,VariableInt=ParameterInt,VariableStr=ParameterStr},
+                new ComplexRefType() {VariableBool= ParameterBool,VariableDateTime=ParameterDateTime,VariableInt=ParameterInt,VariableStr=ParameterStr}
+                                        };
+
+            string result;
+            #endregion
+
+            #region Act
+            using (WebApp.Start<WebApiStartup>(_BaseAddress))
+            {
+                restHelper.AddURLParameters(ParameterKey, ParameterArray);
+                result = await restHelper.ExecuteAsync<string>(HttpMethod.Get, resourceURL);
+            }
+
+
+            #endregion
+
+            #region Assert
+            Assert.AreEqual<string>(string.Format("ArrayObjectBool-{0},{1},{2}",
+                ParameterArray[0].VariableBool,
+                ParameterArray[1].VariableBool,
+                ParameterArray[2].VariableBool), result);
+            #endregion
+
+        }
     }
 }
 

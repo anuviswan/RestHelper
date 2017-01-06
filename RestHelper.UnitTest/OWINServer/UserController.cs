@@ -62,7 +62,13 @@ namespace EcSolvoRestHelper.UnitTest.OWINServer
         [Route("api/user/GetIntArrayStringResponse")]
         public string GetIntArrayStringResponse([FromUri] int[] ArrayObject)
         {
-            return string.Format("ArrayObject-{0}{1}{2}",ArrayObject[0], ArrayObject[1], ArrayObject[2]);
+            return string.Format("ArrayObject-{0},{1},{2}",ArrayObject[0], ArrayObject[1], ArrayObject[2]);
+        }
+
+        [Route("api/user/GetComplexArrayStringResponse")]
+        public string GetComplexArrayStringResponse([FromUri] ComplexRefType[] ArrayObject)
+        {
+            return string.Format("ArrayObjectBool-{0},{1},{2}", ArrayObject[0].VariableBool, ArrayObject[1].VariableBool, ArrayObject[2].VariableBool);
         }
 
         #endregion
@@ -118,8 +124,16 @@ namespace EcSolvoRestHelper.UnitTest.OWINServer
         [Route("api/user/PostIntArrayStringResponse")]
         public string PostIntArrayStringResponse([FromBody]int[] ArrayObject)
         {
-            return string.Format("ArrayObject-{0}{1}{2}", ArrayObject[0], ArrayObject[1], ArrayObject[2]);
+            return string.Format("ArrayObject-{0},{1},{2}", ArrayObject[0], ArrayObject[1], ArrayObject[2]);
         }
+
+        [HttpPost]
+        [Route("api/user/PostComplexArrayStringResponse")]
+        public string PostComplexArrayStringResponse(ComplexRefType[] ArrayObject)
+        {
+            return string.Format("ArrayObjectBool-{0},{1},{2}", ArrayObject[0].VariableBool, ArrayObject[1].VariableBool, ArrayObject[2].VariableBool);
+        }
+
         #endregion
     }
 }

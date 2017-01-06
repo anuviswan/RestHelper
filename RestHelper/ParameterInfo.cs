@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -52,8 +53,16 @@ namespace EcSolvo
                 List<string> parameters = new List<string>();
                 foreach (var param in _URLParameterDictionary)
                 {
+                    // If it is primitive type
                     if (param.Value.GetType().IsPrimitiveType())
                         parameters.Add(string.Format("{0}={1}", param.Key, param.Value));
+                    // If it is an array of Primitive types
+                    else if(param.Value.GetType().IsArray && param.Value.GetType().GetElementType().IsPrimitiveType())
+                    {
+                        foreach (var item in ((IEnumerable)param.Value))
+                            parameters.Add(string.Format("{0}={1}", param.Key, item));
+                    }
+                    // If it is a complex type
                     else
                         parameters.Add(param.Value.ToQueryString());
                 }
