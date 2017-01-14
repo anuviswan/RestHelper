@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace EcSolvo
 {
-    public static class UrlHelpers
+    internal static class UrlHelpers
     {
         /// <summary>
         /// Checks if the DataType is Primitive

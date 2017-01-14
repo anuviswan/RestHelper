@@ -61,12 +61,28 @@ namespace EcSolvo
         }
 
         /// <summary>
+        /// Clear URL Parameters
+        /// </summary>
+        public void ClearURLParameters()
+        {
+            this._ParameterInfo.ClearURLParameters();
+        }
+
+        /// <summary>
         /// Assign FromBody Parameter
         /// </summary>
         /// <param name="Value">Value of Parameter</param>
         public void AssignMessageBodyParameter(dynamic Value)
         {
             _ParameterInfo.AssignMessageBodyParameter(Value);
+        }
+
+        /// <summary>
+        /// Clear Message Body Parameter
+        /// </summary>
+        public void ClearMessageBodyParameter()
+        {
+            _ParameterInfo.ClearMessageBodyParameter();
         }
 
         /// <summary>

@@ -74,6 +74,22 @@ namespace EcSolvo
         }
 
         /// <summary>
+        /// Clear Message Body Parameter
+        /// </summary>
+        internal void ClearMessageBodyParameter()
+        {
+            this._MessageBodyParameter = null;
+        }
+
+        /// <summary>
+        /// Clear URL Parameters
+        /// </summary>
+        internal void ClearURLParameters()
+        {
+            this._URLParameterDictionary.Clear();
+        }
+
+        /// <summary>
         /// Get From Body Parameter
         /// </summary>
         /// <returns>Parameter as HTTP Content</returns>
