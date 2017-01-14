@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("EcSolvo.RestHelper")]
-[assembly: AssemblyDescription("Provides a Wrapper around the HTTPClient")]
+[assembly: AssemblyDescription("RestHelper is a sleek and simple Wrapper library for providing simple access to Rest API, by hiding away the complexities of HTTPClient Class.It is particularly designed to work along with Xamarin PCL Projects")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("EcSolvo Technologies")]
 [assembly: AssemblyProduct("RestHelper")]
@@ -26,5 +26,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.1")]
-[assembly: AssemblyFileVersion("1.0.0.1")]
+[assembly: AssemblyVersion("1.0.1.0")]
+[assembly: AssemblyFileVersion("1.0.1.0")]

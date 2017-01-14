@@ -184,7 +184,7 @@ namespace EcSolvoRestHelper.UnitTest
 
             #region Arrange
 
-            var resourceURL = @"/api/user/PostIntArrayStringResponse";
+            var resourceURL = @"/api/user/PostComplexArrayStringResponse";
             var restHelper = new EcSolvo.RestHelper(_BaseAddress);
 
             var ParameterKey = "ArrayObject";
@@ -213,8 +213,8 @@ namespace EcSolvoRestHelper.UnitTest
 
             #region Assert
             Assert.AreEqual<string>(string.Format("{0}-{1},{2},{3}",
-                                    ParameterKey, ParameterArray[0],
-                                    ParameterArray[1], ParameterArray[2]
+                                    ParameterKey, ParameterArray[0].VariableBool,
+                                    ParameterArray[1].VariableBool, ParameterArray[2].VariableBool
                                     ), result);
             #endregion
 

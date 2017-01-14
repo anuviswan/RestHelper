@@ -129,9 +129,9 @@ namespace EcSolvoRestHelper.UnitTest.OWINServer
 
         [HttpPost]
         [Route("api/user/PostComplexArrayStringResponse")]
-        public string PostComplexArrayStringResponse(ComplexRefType[] ArrayObject)
+        public string PostComplexArrayStringResponse([FromBody]ComplexRefType[] ArrayObject)
         {
-            return string.Format("ArrayObjectBool-{0},{1},{2}", ArrayObject[0].VariableBool, ArrayObject[1].VariableBool, ArrayObject[2].VariableBool);
+            return string.Format("ArrayObject-{0},{1},{2}", ArrayObject[0].VariableBool, ArrayObject[1].VariableBool, ArrayObject[2].VariableBool);
         }
 
         #endregion
