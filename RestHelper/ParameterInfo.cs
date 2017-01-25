@@ -17,12 +17,12 @@ namespace EcSolvo
     {
         #region Private Variables
         private Dictionary<string, object> _URLParameterDictionary;
-        private dynamic _MessageBodyParameter;
+        private object _MessageBodyParameter;
         #endregion
 
         #region Internal Methods
 
-        internal void AssignMessageBodyParameter(dynamic Value)
+        internal void AssignMessageBodyParameter<T>(T Value)
         {
             this._MessageBodyParameter = Value;
         }
@@ -95,7 +95,16 @@ namespace EcSolvo
         /// <returns>Parameter as HTTP Content</returns>
         internal StringContent GetHTTPRequestContent()
         {
-            return  new StringContent(JsonConvert.SerializeObject(_MessageBodyParameter), Encoding.UTF8, "application/json");
+            try
+            {
+                var json = JsonConvert.SerializeObject( _MessageBodyParameter);
+                return new System.Net.Http.StringContent(json, Encoding.UTF8, "application/json");
+            }
+            catch (Exception Ex)
+            {
+                throw Ex;
+            }
+            
         }
         #endregion
 
