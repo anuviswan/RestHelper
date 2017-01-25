@@ -9,7 +9,7 @@
     <projectUrl>https://github.com/anuviswan/RestHelper</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>RestHelper is a sleek and simple Wrapper library for providing simple access to Rest API, by hiding away the complexities of HTTPClient Class.It is particularly designed to work along with Xamarin PCL Projects</description>
-    <releaseNotes>Added Support for Windows Phone and Windows Phone SilverLight, Added Clear Parameter Methods</releaseNotes>
+    <releaseNotes>Added Support for Windows Phone and Windows Phone SilverLight, Added Clear Parameter Methods, Fixed Xamarin Linker Issues</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>REST API WebAPI RESTApi HTTPClient Wrapper</tags>
   </metadata>
