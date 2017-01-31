@@ -20,11 +20,17 @@ For GET Request
 For Handling URI Parameters, the EcSolvo.RestHelper Library exposes a method called 'AddURLParameters', which helps to add parameters to the QueryString dictionary.
 
 private string _BaseAddress = "http://localhost:8888/";
+
 var resourceURL = "api/user/SingleParamStringResponse";
+
 var restHelper = new EcSolvo.RestHelper(_BaseAddress);
+
 string ParameterKey = "VariableStr";
+
 string ParameterValue = "DummyString";
+
 restHelper.AddURLParameters(ParameterKey, ParameterValue);
+
 var result = await restHelper.ExecuteAsync<string>(HttpMethod.Get, resourceURL);
 
 
@@ -36,6 +42,7 @@ For POST Request
 For Handling OnBody Parameter in POST Request, the library exposes a method called 'AssignMessageBodyParameter'.
 
 restHelper.AssignMessageBodyParameter(Parameter);
+
 var result = await restHelper.ExecuteAsync<string>(HttpMethod.Post, resourceURL);
 
 If the POST Request have additional URI Parameters, it can use the 'AddURLParameters' Method to add it to the dictionary.
