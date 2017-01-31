@@ -27,6 +27,7 @@ string ParameterValue = "DummyString";
 restHelper.AddURLParameters(ParameterKey, ParameterValue);
 var result = await restHelper.ExecuteAsync<string>(HttpMethod.Get, resourceURL);
 
+
 The library works even if the parameter passed is a Complex Parameter (Controller uses FromUri Attribute).
 
 For POST Request
