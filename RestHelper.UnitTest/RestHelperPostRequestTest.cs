@@ -178,6 +178,40 @@ namespace EcSolvoRestHelper.UnitTest
 
         }
 
+
+        [TestMethod]
+        public async Task CallMultipleParamAPI_Post_PostMultipleTypeParamStringResponse()
+        {
+
+            #region Arrange
+            var resourceURL = @"/api/user/PostMultipleTypeParamStringResponse";
+            var restHelper = new EcSolvo.RestHelper(_BaseAddress);
+            string ParameterKey1 = "VariableStr";
+            string ParameterValue1 = "DummyString";
+            string ParameterKey2 = "VariableInt";
+            int ParameterValue2 = 12;
+            string ParameterKey3 = "VariableDateTime";
+            DateTime ParameterValue3 = DateTime.Now;
+            string result;
+            #endregion
+
+            #region Act
+            using (WebApp.Start<WebApiStartup>(_BaseAddress))
+            {
+                restHelper.AddURLParameters(ParameterKey1, ParameterValue1);
+                restHelper.AddURLParameters(ParameterKey2, ParameterValue2);
+                restHelper.AddURLParameters(ParameterKey3, ParameterValue3);
+                result = await restHelper.ExecuteAsync<string>(HttpMethod.Post, resourceURL);
+            }
+            #endregion
+
+            #region Assert
+            Assert.AreEqual<string>(string.Format("{0}={1}&{2}={3}", ParameterKey1, ParameterValue1,
+                                                                     ParameterKey2, ParameterValue2), result);
+            #endregion
+
+        }
+
         [TestMethod]
         public async Task CallComplexArrayParamAPI_Post_GetResponseWithParamatersNameValueAppended()
         {

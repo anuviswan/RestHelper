@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Net.Http.Headers;
+using System.Threading;
 
 namespace EcSolvo
 {
@@ -19,9 +20,22 @@ namespace EcSolvo
         private Uri _BaseUri;
         private HttpClient _HttpClient;
         private ParameterInfo _ParameterInfo;
+        private TimeSpan _TimeOutDuration = TimeSpan.Zero;
         #endregion
 
         #region Public Attributes
+
+        public TimeSpan TimeOutDuration
+        {
+            get
+            {
+                return _TimeOutDuration;
+            }
+            set
+            {
+                this._TimeOutDuration = value;
+            }
+        }
 
         /// <summary>
         /// String representing Base URL
@@ -44,8 +58,6 @@ namespace EcSolvo
         public RestHelper(string BaseUri)
         {
             this._BaseUri = new Uri(BaseUri);
-            this._HttpClient = new HttpClient();
-            this._HttpClient.MaxResponseContentBufferSize = int.MaxValue;
             this._ParameterInfo = new ParameterInfo();
         }
         #endregion
@@ -106,6 +118,11 @@ namespace EcSolvo
                 result = await ExecutePostAsync<TReturnValue>(completeURI);
                 return result;
             }
+            else if (MethodType == HttpMethod.Put)
+            {
+                result = await ExecutePutAsync<TReturnValue>(completeURI);
+                return result;
+            }
             return default(TReturnValue);
         }
         
@@ -120,8 +137,12 @@ namespace EcSolvo
         private async Task<TReturnValue> ExecuteGetAsync<TReturnValue>(Uri CompleteURI)
         {
             TReturnValue result;
-            try
+            using (this._HttpClient = new HttpClient())
             {
+                this._HttpClient.MaxResponseContentBufferSize = int.MaxValue;
+                if (!_TimeOutDuration.Equals(TimeSpan.Zero))
+                    _HttpClient.Timeout = _TimeOutDuration;
+
                 var response = await _HttpClient.GetAsync(CompleteURI);
 
                 if (response.IsSuccessStatusCode)
@@ -130,11 +151,6 @@ namespace EcSolvo
                     result = JsonConvert.DeserializeObject<TReturnValue>(content);
                     return result;
                 }
-            }
-            catch (Exception Ex)
-            {
-                string s = Ex.Message;
-                throw;
             }
             return default(TReturnValue);
         }
@@ -148,21 +164,48 @@ namespace EcSolvo
         private async Task<TReturnValue> ExecutePostAsync<TReturnValue>(Uri CompleteURI)
         {
             TReturnValue result;
-            try
+            using (this._HttpClient = new HttpClient())
             {
-                var response = await _HttpClient.PostAsync(CompleteURI,_ParameterInfo.GetHTTPRequestContent());
+                this._HttpClient.MaxResponseContentBufferSize = int.MaxValue;
+                if (!_TimeOutDuration.Equals(TimeSpan.Zero))
+                    _HttpClient.Timeout = _TimeOutDuration;
 
-                if(response.IsSuccessStatusCode)
+                var response = await _HttpClient.PostAsync(CompleteURI, _ParameterInfo.GetHTTPRequestContent());
+
+                if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
                     result = JsonConvert.DeserializeObject<TReturnValue>(content);
                     return result;
                 }
             }
-            catch (Exception Ex)
+            return default(TReturnValue);
+        }
+
+
+        /// <summary>
+        /// Execute a PUT Request on API
+        /// </summary>
+        /// <typeparam name="TReturnValue">Expected Return Type</typeparam>
+        /// <param name="CompleteURI">Complete URI to Resource API</param>
+        /// <returns>Value returned by the API</returns>
+        private async Task<TReturnValue> ExecutePutAsync<TReturnValue>(Uri CompleteURI)
+        {
+            TReturnValue result;
+            using (this._HttpClient = new HttpClient())
             {
-                string s = Ex.Message;
-                throw;
+                this._HttpClient.MaxResponseContentBufferSize = int.MaxValue;
+                if (!_TimeOutDuration.Equals(TimeSpan.Zero))
+                    _HttpClient.Timeout = _TimeOutDuration;
+
+                var response = await _HttpClient.PutAsync(CompleteURI, _ParameterInfo.GetHTTPRequestContent());
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    result = JsonConvert.DeserializeObject<TReturnValue>(content);
+                    return result;
+                }
             }
             return default(TReturnValue);
         }

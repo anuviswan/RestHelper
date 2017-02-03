@@ -90,7 +90,7 @@ namespace EcSolvoRestHelper.UnitTest.OWINServer
         }
 
         [HttpPost]
-        [Route("")]
+        [Route("api/user/PostMultipleTypeParamStringResponse")]
         public string PostMultipleTypeParamStringResponse(string VariableStr, int VariableInt, bool VariableBool)
         {
             return string.Format("VariableStr={0}&VariableInt={1}&VariableBool={2}", VariableStr, VariableInt, VariableBool);
@@ -134,6 +134,34 @@ namespace EcSolvoRestHelper.UnitTest.OWINServer
             return string.Format("ArrayObject-{0},{1},{2}", ArrayObject[0].VariableBool, ArrayObject[1].VariableBool, ArrayObject[2].VariableBool);
         }
 
+        #endregion
+
+        #region Put Requests
+
+        [HttpPut]
+        [Route("api/user/PutStringParamStringResponse")]
+        public string PutStringParamStringResponse(string VariableStr)
+        {
+            return string.Format("{0}={1}", "VariableStr", VariableStr);
+        }
+
+        [HttpPut]
+        [Route("")]
+        public string PutMultipleTypeParamStringResponse(string VariableStr, int VariableInt, DateTime VariableDateTime)
+        {
+            return string.Format("VariableStr={0}&VariableInt={1}&VariableDateTime={2}", VariableStr, VariableInt, VariableDateTime);
+        }
+
+        [HttpPut]
+        [Route("api/user/PutComplexReferenceTypeParamStringResponse")]
+        public string PutComplexReferenceTypeParamStringResponse(ComplexRefType VariableComplexRef)
+        {
+            return string.Format("VariableStr={0}&VariableInt={1}&VariableBool={2}&VariableDateTime={3}",
+                                    VariableComplexRef.VariableStr,
+                                    VariableComplexRef.VariableInt,
+                                    VariableComplexRef.VariableBool,
+                                    VariableComplexRef.VariableDateTime);
+        }
         #endregion
     }
 }

@@ -19,7 +19,7 @@ namespace EcSolvoRestHelper.UnitTest.OWINServer
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{action}/{id}",
+                routeTemplate: "api/{controller}/{action}",
                 defaults: new { id = RouteParameter.Optional }
             );
 
