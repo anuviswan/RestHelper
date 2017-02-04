@@ -13,6 +13,7 @@
 $version$
 • Added Support for PUT Verb
 • Added ability to set TimeOutDuration
+• Added ability to inject HttpClient 
 
 1.0.1.119
 Bugs Fixed
