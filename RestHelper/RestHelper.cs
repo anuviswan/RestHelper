@@ -86,6 +86,16 @@ namespace EcSolvo
         }
 
         /// <summary>
+        /// Returns Current Query String
+        /// </summary>
+        /// <returns></returns>
+        public string GetQueryString()
+        {
+            return this._ParameterInfo.GetQueryString();
+        }
+
+
+        /// <summary>
         /// Assign FromBody Parameter
         /// </summary>
         /// <param name="Value">Value of Parameter</param>
@@ -100,6 +110,15 @@ namespace EcSolvo
         public void ClearMessageBodyParameter()
         {
             _ParameterInfo.ClearMessageBodyParameter();
+        }
+
+        /// <summary>
+        /// Get From Body Parameter Detail
+        /// </summary>
+        /// <returns></returns>
+        public StringContent GetHTTPRequestContent()
+        {
+            return this._ParameterInfo.GetHTTPRequestContent();
         }
 
         /// <summary>

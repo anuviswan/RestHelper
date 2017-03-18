@@ -86,7 +86,7 @@ namespace EcSolvo
         /// </summary>
         internal void ClearURLParameters()
         {
-            this._URLParameterDictionary.Clear();
+            this._URLParameterDictionary?.Clear();
         }
 
         /// <summary>

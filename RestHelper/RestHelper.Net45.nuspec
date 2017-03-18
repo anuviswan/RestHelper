@@ -11,6 +11,11 @@
     <description>RestHelper is a sleek and simple Wrapper library for providing simple access to Rest API, by hiding away the complexities of HTTPClient Class.It is particularly designed to work along with Xamarin PCL Projects</description>
     <releaseNotes>
 $version$
+• Added Methods : GetQueryString, GetHTTPRequestContent
+Bugs Fixed 
+• Fixed Exception when ClearParameters are invoked.
+
+1.0.1.141
 • Added Support for PUT Verb
 • Added ability to set TimeOutDuration
 • Added ability to inject HttpClient 
