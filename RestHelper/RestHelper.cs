@@ -51,14 +51,23 @@ namespace EcSolvo
         #endregion
 
         #region Ctor
+
+        public RestHelper(string BaseUri, HttpClient Client)
+        {
+            this.DoConstructorTasks(BaseUri, Client);
+        }
+
         /// <summary>
         /// Constructor accepting the base URL as parameter
         /// </summary>
         /// <param name="BaseUri"></param>
-        public RestHelper(string BaseUri,HttpClient Client=null)
+        public RestHelper(string BaseUri)
         {
+            this.DoConstructorTasks(BaseUri, new HttpClient());
+        }
 
-            this._HttpClient = (Client == null ? new HttpClient() : Client);
+        private void DoConstructorTasks(string BaseUri,HttpClient Client)
+        {
             this._HttpClient.MaxResponseContentBufferSize = int.MaxValue;
 
             this._BaseUri = new Uri(BaseUri);
