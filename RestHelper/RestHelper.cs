@@ -68,6 +68,7 @@ namespace EcSolvo
 
         private void DoConstructorTasks(string BaseUri,HttpClient Client)
         {
+            this._HttpClient = Client;
             this._HttpClient.MaxResponseContentBufferSize = int.MaxValue;
 
             this._BaseUri = new Uri(BaseUri);
